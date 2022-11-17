@@ -1,0 +1,73 @@
+package bussy.persistence;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
+
+import bussy.model.Fermata;
+import bussy.model.Linea;
+import bussy.model.LineaCircolare;
+import bussy.model.LineaPaP;
+
+public class MyTransportLinesReader implements TransportLinesReader {
+
+	@Override
+	public Map<String, Linea> readTransportLines(BufferedReader reader) throws IOException, BadFileFormatException {
+		
+		Map<String, Linea> ret = new TreeMap<>();
+		
+		Linea l;
+		while ((l = readTransportLine(reader))!= null) {
+			ret.put(l.getId(), l);
+		}
+		return ret;
+	}
+	
+	private Linea readTransportLine(BufferedReader BR) throws IOException, BadFileFormatException {
+		String id = BR.readLine();
+		System.out.println(id);
+		if (id == null) return null;
+//		if (tokens.length != 3) {
+//			throw new BadFileFormatException("Not linea - ID format");
+//		}
+		Map<Integer, Fermata> orariPassaggioAlleFermate = new TreeMap<>();
+		
+		String first_fermata_ID = null;
+		boolean circolare = false;
+		
+		String line;
+		while((line = BR.readLine())!= null && !line.equals("--------------------------")) {
+			String[] tokens = line.split(",");
+			for (String s : tokens) {
+				s = s.trim();
+				System.out.print(s+"|");
+			}
+			if (tokens.length != 3) {
+				throw new BadFileFormatException("Not format fermata");
+			}
+			try {
+				int orario = Integer.parseInt(tokens[0]);
+				Fermata f = new Fermata(tokens[1], tokens[2]);
+				orariPassaggioAlleFermate.put(orario, f);
+			} catch (Error e) {
+				throw new BadFileFormatException(e.getMessage());
+			}
+			if (first_fermata_ID == null) {
+				first_fermata_ID = tokens[2];
+			} else {
+				circolare = first_fermata_ID == tokens[2];
+			}
+		}
+		System.out.println("\n");
+		Linea l;
+		if (circolare) {
+			l = new LineaCircolare(id, orariPassaggioAlleFermate);
+		} else {
+			l = new LineaPaP(id, orariPassaggioAlleFermate);
+		}
+		return l;
+	}
+
+}

@@ -1,0 +1,29 @@
+package minirail.persistence;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.List;
+
+import minirail.model.Line;
+import minirail.model.Section;
+
+public class MyLineReader implements LineReader {
+	private Line line;
+	private String lineKeyWord;
+	private String lineName;
+	private List<Section> sections;
+	
+	public MyLineReader(Reader reader) throws IOException {
+		if (reader == null) throw new IOException("null reader");
+		BufferedReader br = new BufferedReader(reader);
+		
+		
+		
+	}
+	
+	@Override
+	public Line getLine() {
+		return this.line;
+	}
+}

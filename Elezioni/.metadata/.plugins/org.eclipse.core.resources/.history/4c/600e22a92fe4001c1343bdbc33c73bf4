@@ -1,0 +1,14 @@
+package dentinia.governor.persistence;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
+public class Prova {
+	public static void main(String[] args) {
+		DateTimeFormatter formatterMedium = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL);
+		LocalDateTime t = LocalDateTime.now();
+		System.out.println(t.format(formatterMedium));
+	}
+}

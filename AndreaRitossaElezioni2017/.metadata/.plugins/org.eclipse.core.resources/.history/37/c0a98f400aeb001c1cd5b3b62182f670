@@ -1,0 +1,20 @@
+package elections.ui.javafx;
+
+import elections.ui.controller.Controller;
+import javafx.scene.layout.BorderPane;
+
+public class ElectionPane extends BorderPane {
+	private Controller controller;
+	private Slider slider;
+	private TextArea situa;
+	private PieChart situaChart;
+	private Button calcola;
+	private Button salva;
+	
+	public ElectionPane(Controller c) {
+		controller = c;
+		
+		slider = new Slider();
+		
+	}
+}

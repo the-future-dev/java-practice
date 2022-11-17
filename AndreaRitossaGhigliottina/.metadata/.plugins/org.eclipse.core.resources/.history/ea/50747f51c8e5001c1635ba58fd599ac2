@@ -1,0 +1,14 @@
+package ghigliottina.model;
+
+public class Ghigliottina {
+
+	private Iterator<Terna> iterator;
+	private String rispostaEsatta;
+	private List<Terna> terne;
+	
+	public Ghigliottina(List<Terna> terne, String rE) {
+		this.rispostaEsatta = rE;
+		this.terne = terne;
+	}
+	
+}

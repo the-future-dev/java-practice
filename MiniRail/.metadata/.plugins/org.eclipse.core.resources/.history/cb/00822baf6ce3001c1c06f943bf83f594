@@ -1,0 +1,51 @@
+package minirail.model;
+
+import java.util.Map;
+
+public class MyRunner implements Runner {
+	private Gauge gauge;
+	private Map<String, LineStatus> lines;
+	private StringBuilder logger;
+
+	public MyRunner(Map<String, LineStatus> mLS, Gauge g) {
+		this.gauge = g;
+		this.lines = mLS;
+		logger = new StringBuilder();
+	}
+	
+	@Override
+	public void clock(double period) {
+		for (LineStatus ls : lines.values()) {
+			for (Train t : ls.getAllTrains()) {
+				if (t.getStatus()!= TrainStatus.STOPPED)
+					this.moveTrain(ls, t, period);
+				else throw new RuntimeException("e");
+			}
+		}
+	}
+	
+	private void moveTrain(LineStatus ls, Train t, double period) {
+		double trainLocation = ls.getTrainLocation(t);
+		double spazioPercorso = period * t.getSpeed();
+		
+		double mayNewPosition = (trainLocation + spazioPercorso)%ls.getLine().getLength();
+		
+		boolean moved = ls.moveTrain(t, mayNewPosition);
+		logger.append(moved+": trying to move "+t.getName()+" from "+trainLocation+ " to: "+mayNewPosition);
+		
+	}
+
+	@Override
+	public Map<String, LineStatus> getLines() {
+		return this.lines;
+	}
+
+	@Override
+	public Gauge getGauge() {
+		return this.gauge;
+	}
+	
+	public String toString() {
+		return logger.toString();
+	}
+}

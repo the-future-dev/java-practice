@@ -1,0 +1,34 @@
+package rfd.model;
+
+public class MyPointOfInterest extends PointOfInterest {
+
+	
+	public MyPointOfInterest(String name, String progressivaKm) {
+//		progressivaKM: 101+273
+		super(name, progressivaKm);
+		if (name == null || progressivaKm == null || this.getKm().equals("") || this.getStationName().equals("")) {
+			throw new IllegalArgumentException("vuoto");
+		}
+		char [] arr = progressivaKm.toCharArray();
+		
+		boolean ok1 = false, ok2 = false;
+		for (int i = 0; i < arr.length; i++) {
+			
+		}
+		
+
+	}
+
+	@Override
+	public double getKmAsNum() {
+		String[] splitted = this.getKm().split("+");
+		if(this.getKm().equals("") || splitted.length != 2|| splitted[0].length()<3 || splitted[1].length() < 1)
+			throw new IllegalArgumentException("Nullable km");
+		try {
+			return Integer.parseInt(splitted[0]);
+		} catch(Error e) {
+			throw new Error(e.getLocalizedMessage());
+		}
+	}
+
+}

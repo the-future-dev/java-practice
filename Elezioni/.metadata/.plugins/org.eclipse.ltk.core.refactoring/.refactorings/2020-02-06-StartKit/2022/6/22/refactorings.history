@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;2020-02-06-StartKit&apos;&#x0D;&#x0A;- Original project: &apos;2020-02-06-StartKit&apos;&#x0D;&#x0A;- Original element: &apos;dentinia.governor.persistence.MyVotiReader.java&apos;" description="Delete element" element1="/src&lt;dentinia.governor.persistence{MyVotiReader.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1654351236712" subPackages="false" version="1.0"/>
+</session>

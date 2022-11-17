@@ -1,0 +1,36 @@
+package minesweeper.model;
+
+public class RealMineField extends MineField {
+	
+	private int mines;
+	
+	private void calcAdjacentMines(int a, int b) {
+		
+	}
+	
+	public RealMineField() {
+		this(10);
+	}
+	
+	public RealMineField(int size) {
+		super(size);
+		init();
+	}
+	
+	public RealMineField(int size, int nMine) {
+		super(size);
+		this.mines = nMine;
+		init();
+	}
+	
+	public int getMinesNumber() {
+		return this.mines;
+	}
+	
+	@Override
+	protected void init() {
+		Cell[] bombs = new Cell[mines];
+
+	}
+
+}

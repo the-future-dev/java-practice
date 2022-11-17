@@ -1,0 +1,13 @@
+package rfd.model;
+
+import java.util.List;
+
+public class OneChangeRouteFinder extends RouteFinder {
+
+	@Override
+	public List<Route> getRoutes(String from, String to) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

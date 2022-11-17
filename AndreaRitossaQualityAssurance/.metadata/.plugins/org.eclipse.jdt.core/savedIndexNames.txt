@@ -1,0 +1,15 @@
+INDEX VERSION 1.131+C:\Users\andre\Desktop\JAVA_unibo\esami\AndreaRitossaQualityAssurance\.metadata\.plugins\org.eclipse.jdt.core
+2732512550.index
+2570588505.index
+1248812141.index
+1865797976.index
+2064407031.index
+4195231776.index
+4250067686.index
+2985377265.index
+2433859119.index
+3690514212.index
+396412696.index
+1699243463.index
+3456688573.index
+1392517965.index

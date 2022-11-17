@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="java.io.BufferedReader"/>
+    <fullyQualifiedTypeName name="java.util.LinkedList"/>
+    <fullyQualifiedTypeName name="qa.ui.controller.Controller"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.ComboBox"/>
+    <fullyQualifiedTypeName name="javafx.scene.layout.VBox"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.TextArea"/>
+    <fullyQualifiedTypeName name="javafx.event.ActionEvent"/>
+    <fullyQualifiedTypeName name="javafx.scene.chart.BarChart"/>
+    <fullyQualifiedTypeName name="javafx.scene.chart.CategoryAxis"/>
+    <fullyQualifiedTypeName name="javafx.scene.chart.NumberAxis"/>
+    <fullyQualifiedTypeName name="javafx.scene.chart.XYChart"/>
+    <fullyQualifiedTypeName name="javafx.scene.chart.XYChart.Data"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="qa.model.Misura"/>
+    <fullyQualifiedTypeName name="java.text.NumberFormat"/>
+</qualifiedTypeNameHistroy>

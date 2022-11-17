@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;unident.persistence.UniDentiPianoDidatticoReader&apos; to &apos;UniDentPianoDidatticoReader&apos;&#x0D;&#x0A;- Original project: &apos;AndreaRitossaUniDenti&apos;&#x0D;&#x0A;- Original element: &apos;unident.persistence.UniDentiPianoDidatticoReader&apos;&#x0D;&#x0A;- Renamed element: &apos;unident.persistence.UniDentPianoDidatticoReader&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;UniDentiPianoDidatticoReader&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;unident.persistence{UniDentiPianoDidatticoReader.java[UniDentiPianoDidatticoReader" matchStrategy="1" name="UniDentPianoDidatticoReader" qualified="false" references="true" similarDeclarations="false" stamp="1654459425964" textual="false" version="1.0"/>
+</session>

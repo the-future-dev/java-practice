@@ -1,0 +1,7 @@
+package bussy.ui;
+
+import javafx.scene.layout.BorderPane;
+
+public class MainPane extends BorderPane {
+
+}

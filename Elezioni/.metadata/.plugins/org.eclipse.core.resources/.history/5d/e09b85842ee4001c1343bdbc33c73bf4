@@ -1,0 +1,33 @@
+package dentinia.governor.persistence;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringReader;
+
+import dentinia.governor.model.Elezioni;
+
+public class MySeggiWriter implements SeggiWriter {
+	
+	private String outputFinaleName;
+	
+	public MySeggiWriter(String name) {
+		this.outputFinaleName = name;
+	}
+	
+	@Override
+	public void stampaSeggi(Elezioni elezioni, String msg) throws IOException {
+		PrintWriter f = new PrintWriter(new FileWriter(outputFinaleName));
+		System.out.println("")
+		f.println();
+	}
+	
+	public static void main(String[] args) {
+		String s =  "SEGGI 100\nLista A 1.100.000, Lista B 2.200.000\n";
+		VotiReader reader = new MyVotiReader(new StringReader(s));		
+		Elezioni voti = reader.getElezioni();
+		
+		stampaSeggi(voti);
+	}
+
+}

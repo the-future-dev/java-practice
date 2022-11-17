@@ -1,0 +1,14 @@
+package elbonia.model;
+
+import java.util.List;
+import java.util.Map;
+
+public class CalcolatoreSeggiMaggioritario implements CalcolatoreSeggi {
+
+	@Override
+	public Map<String, Integer> assegnaSeggi(int dimensioneCollegio, List<Collegio> listaCollegi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

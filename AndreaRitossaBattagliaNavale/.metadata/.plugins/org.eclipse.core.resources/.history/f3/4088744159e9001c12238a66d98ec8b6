@@ -1,0 +1,28 @@
+package battleship.persistence;
+
+import java.io.IOException;
+import java.io.Reader;
+
+import battleship.model.ShipBoard;
+
+public class MyBattleShipReader implements BattleshipReader {
+	private ShipBoard playerBoard;
+	private ShipBoard solutionBoard;
+	
+	@Override
+	public ShipBoard getSolutionBoard(Reader reader) throws BadFileFormatException, IOException {
+		// TODO Auto-generated method stub
+		return this.solutionBoard;
+	}
+
+	@Override
+	public ShipBoard getPlayerBoard(Reader reader) throws BadFileFormatException, IOException {
+		// TODO Auto-generated method stub
+		return this.playerBoard;
+	}
+	
+	protected ShipBoard readBoard(Reader reader, String admissibleChars) {
+		
+	}
+
+}

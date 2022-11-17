@@ -1,0 +1,138 @@
+package mastermind.ui;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+import mastermind.model.Combinazione;
+import mastermind.model.PioloDiGioco;
+import mastermind.model.Status;
+
+public class MasterMindPane extends BorderPane {
+
+	private TextArea output;
+	private Button stampaReport, restart, inserisci, svela;
+	private Controller controller;
+	private Label rimasti, status;
+	private List<ComboBox<PioloDiGioco>> bottoniCodice;
+	
+	public MasterMindPane(Controller controller, Stage stage) {
+		this.controller=controller;
+		
+		VBox top = new VBox();
+		inserisci = new Button("Inserisci"); inserisci.setOnAction(this::gioca);
+		
+		HBox buttons = new HBox();
+		ComboBox<PioloDiGioco> primo = new ComboBox<>();
+		ComboBox<PioloDiGioco> secondo = new ComboBox<>();
+		ComboBox<PioloDiGioco> terzo = new ComboBox<>();
+		ComboBox<PioloDiGioco> quarto = new ComboBox<>();
+		primo.setItems( FXCollections.observableArrayList(PioloDiGioco.values())); 
+		secondo.setItems( FXCollections.observableArrayList(PioloDiGioco.values()));
+		terzo.setItems( FXCollections.observableArrayList(PioloDiGioco.values()));
+		quarto.setItems( FXCollections.observableArrayList(PioloDiGioco.values()));
+		primo.setOnAction(this::colorer);
+		secondo.setOnAction(this::colorer);
+		terzo.setOnAction(this::colorer);
+		quarto.setOnAction(this::colorer);
+		buttons.getChildren().addAll(primo, secondo, terzo, quarto);
+		bottoniCodice = new ArrayList<>(List.of(primo, secondo, terzo, quarto));
+		buttons.setAlignment(Pos.CENTER);
+		
+		top.getChildren().addAll(buttons, inserisci);
+		top.setAlignment(Pos.CENTER);
+		
+		FlowPane left = new FlowPane();
+		stampaReport = new Button("Stampa Report"); stampaReport.setOnAction(this::saver);
+		restart = new Button("Restart");	restart.setOnAction(this::restarter);
+		svela = new Button("Svela"); svela.setOnAction(this::reveal);
+		left.getChildren().addAll(stampaReport, restart, svela);
+		
+		
+		output = new TextArea("");
+//		
+		
+		HBox bottom = new HBox();
+		rimasti = new Label("");
+		status = new Label("");
+		rimasti.setText("Tentativi rimasti: " + controller.tentativiRimasti() + "  ");
+		status.setText("Stato del gioco: " + controller.status());
+		
+		bottom.getChildren().setAll(rimasti, status);
+		
+		this.setBottom(bottom);
+		this.setRight(output);
+		this.setTop(top);
+		this.setLeft(left);
+		// ...
+		// DA COMPLETARE
+	}
+	
+	private void saver(ActionEvent e) {
+		controller.save();
+		// ...
+		// DA COMPLETARE
+	}
+
+	private void gioca(ActionEvent e) {
+		Combinazione comb = new Combinazione(bottoniCodice.size());
+		int i = 0;
+		for (ComboBox<PioloDiGioco> cbW : bottoniCodice) {
+			PioloDiGioco pdgW = cbW.getValue();
+			if (pdgW == null || pdgW.equals(PioloDiGioco.VUOTO)) {
+				MasterMindApp.alert("Colore indefinito", "", "Uno dei colori non è stato ancora selezionato");
+			} else {
+				comb.setPiolo(i, pdgW);
+				i++;
+			}
+		}
+		controller.tenta(comb);
+		output.setText(controller.situazione());
+		rimasti.setText("Tentativi rimasti: " + controller.tentativiRimasti() + "  ");
+		status.setText("Stato del gioco: " + controller.status());
+		
+	}
+
+	// da agganciare al pulsante "Svela"
+	private void reveal(ActionEvent e) {
+		controller.
+		// ...
+		// DA COMPLETARE
+	}
+	
+	// da agganciare al pulsante "Restart"
+	private void restarter(ActionEvent e) {
+		controller.restart();
+		output.setText("");
+		inserisci.setDisable(false);
+		rimasti.setText("Tentativi rimasti: " + controller.tentativiRimasti() + "  ");
+		status.setText("Stato del gioco: " + controller.status());
+		for (ComboBox<PioloDiGioco> c : bottoniCodice) {
+			c.getSelectionModel().clearSelection();
+			c.setStyle("-fx-background-color: #C0C0C0;");
+		}
+	}
+
+	// da agganciare alle combo per colorarne automaticamente lo sfondo
+	private void colorer(ActionEvent e) {
+		@SuppressWarnings("unchecked")
+		ComboBox<PioloDiGioco> combo = (ComboBox<PioloDiGioco>)(e.getSource());
+		if (combo.getValue()!=null) {
+			combo.setStyle("-fx-background-color: " + combo.getValue().rgb() + ";");
+		};
+	}
+	
+}

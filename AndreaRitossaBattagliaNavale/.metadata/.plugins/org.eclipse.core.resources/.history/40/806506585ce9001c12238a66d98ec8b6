@@ -1,0 +1,70 @@
+package battleship.controller;
+
+import java.util.Map;
+
+import battleship.model.ShipItem;
+import battleship.model.ShipType;
+
+public class MyController implements Controller {
+
+	@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ShipItem getCurrentCellItem(int row, int col) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setCurrentCellItem(int row, int col, ShipItem value) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean isGameOver() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getShipList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int[] getCountingRow() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int[] getCountingColumn() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int verify() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Map<ShipType, Integer> getShipCount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ShipItem getSolutionCellItem(int row, int col) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

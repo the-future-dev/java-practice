@@ -1,0 +1,24 @@
+package minesweeper.persistence;
+
+import java.io.BufferedReader;
+import java.io.Reader;
+
+public class MyConfigReader implements ConfigReader {
+	
+	public MyConfigReader (Reader reader) {
+		BufferedReader breader = new BufferedReader(reader);
+		
+	}
+	@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getMinesNumber() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

@@ -1,0 +1,85 @@
+package mastermind.model;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Random;
+import java.util.TreeMap;
+
+public class MasterMind extends Gioco {
+
+	public MasterMind(int maxTentativi, int dim) {
+		super(maxTentativi, dim);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void sorteggiaCombinazione(Combinazione segreta) {
+		Random r = new Random();
+		if (segreta.getPiolo(0) != null) {
+			for (int i = 0; i<this.dimensione(); i++) {
+				PioloDiGioco pG = PioloDiGioco.values()[r.nextInt(7)];
+				segreta.setPiolo(i, pG);
+			}
+		} else {
+			System.out.println("Gia inizializzata: \n"+segreta);
+		}
+	}
+	private Map<PioloDiGioco, Integer> combinazioneMapped(Combinazione tentativo){
+		Map<PioloDiGioco, Integer> tentativoInCifre = new TreeMap<>();
+		
+		for (PioloDiGioco pdG: PioloDiGioco.values()) {
+			tentativoInCifre.put(pdG, 0);
+		}
+		for (int i = 0; i<tentativo.dim(); i++) {
+			PioloDiGioco pW = tentativo.getPiolo(i);
+			Integer w = tentativoInCifre.get(pW);
+			tentativoInCifre.put(pW, w+1);
+		}
+		return tentativoInCifre;
+	}
+	@Override
+	protected Risposta calcolaRisposta(Combinazione tentativo) {
+		Risposta response = new Risposta(this.dimensione());
+//		Map<PioloDiGioco, Integer> tentativoInCifre = combinazioneMapped(tentativo);
+		Map<PioloDiGioco, Integer> inside = combinazioneMapped(segreta); 
+		PioloRisposta[] pr = new PioloRisposta[this.dimensione()];
+		for (int i = 0; i<tentativo.dim(); i++) {
+			PioloDiGioco pTentatoInI = tentativo.getPiolo(i);
+			PioloDiGioco pRispostInI = segreta.getPiolo(i);
+			PioloRisposta pR;
+			if (pTentatoInI.equals(pRispostInI)) {
+				pR = PioloRisposta.NERO;
+			} else if (inside.get(pTentatoInI) != 0) {
+				pR = PioloRisposta.BIANCO;
+				Integer w = inside.get(pTentatoInI);
+				inside.put(pTentatoInI, w-1);
+				System.out.println(inside.get(pTentatoInI));
+			} else {
+				pR = PioloRisposta.VUOTO;
+			}
+			pr[i] = pR;
+		}
+//		Arrays.sort(pr);
+		int j = 0;
+		for (int i = 0; i<tentativo.dim(); i++) {
+			if (pr[i] == PioloRisposta.NERO) {
+				response.setPiolo(j, pr[i]);
+				j++;
+			}
+		}
+		for (int i = 0; i<tentativo.dim(); i++) {
+			if (pr[i] == PioloRisposta.BIANCO) {
+				response.setPiolo(j, pr[i]);
+				j++;
+			}
+		}
+		for (int i = 0; i<tentativo.dim(); i++) {
+			if (pr[i] == PioloRisposta.VUOTO) {
+				response.setPiolo(j, pr[i]);
+				j++;
+			}
+		}
+		return response;
+	}
+
+}

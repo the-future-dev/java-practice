@@ -1,0 +1,26 @@
+package mastermind.persistence;
+
+import java.io.BufferedReader;
+import java.io.Reader;
+
+public class MyConfigReader implements ConfigReader {
+	private int dim = 0;
+	private int maxTentativi = 0;
+	
+	public MyConfigReader(Reader reader) {
+		BufferedReader br = new BufferedReader(reader);
+		
+	}
+	@Override
+	public int dimensioneCodice() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int numeroTentativi() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

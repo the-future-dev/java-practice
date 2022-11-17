@@ -1,0 +1,135 @@
+package minirail.ui.javafx;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.TreeMap;
+
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import minirail.model.LineStatus;
+import minirail.model.Train;
+import minirail.model.TrainStatus;
+import minirail.ui.controller.Controller;
+
+public class MiniRailPane extends BorderPane {
+	private Button clock;
+	private Controller controller;
+	private Label label;
+	private Button moving;
+	private TextArea output;
+	private Button stopping;
+	private Map<Train, Color> trainColors;
+	
+	public MiniRailPane(Controller c, double[] ad) {
+		this.controller = c;
+		
+		clock = new Button("Clock");
+		clock.setOnAction(this::advanceClock);
+		
+		HBox top = new HBox();
+		moving = new Button("Move trains");
+		moving.setOnAction(this::moveTrains);
+		stopping = new Button("Stop trains");
+		stopping.setOnAction(this::stropTrains);
+		label = new Label("Trains are now STOPPED");
+		top.getChildren().addAll(moving, stopping, label);
+		
+		
+		
+		output = new TextArea();
+		output.setEditable(false);
+		
+		this.setBottom(output);
+		this.setRight(clock);
+		this.setTop(top);
+		this.setupTrainPanel(ad);
+	}
+	
+	private void advanceClock(ActionEvent e) {
+		try{
+			controller.clock(0.5);
+		} catch (Exception e1){
+			System.out.println(e1.getMessage());
+		}
+		output.setText(controller.getLog());
+		updateTrainPanel();
+	}
+	
+	private Color randomColor() {
+		Random random = new Random();
+		double red = random.nextDouble(0, 1);
+		double green = random.nextDouble(0, 1);
+		double blue = random.nextDouble(0, 1);
+		
+		return new Color(red, green, blue,1);
+	}
+	
+	private void drawTrainColors(Map<Train, Color> mp) {
+		for (Train t : controller.getTrains()){
+			int lini = trainColors.size();
+			while(lini == trainColors.size()){
+				Color c = randomColor();
+				if (!trainColors.containsValue(c)){
+					trainColors.put(t, c);
+				}
+			}
+		}
+	}
+	
+	private void moveTrains(ActionEvent e) {
+		for (Train t : controller.getTrains()) {
+			controller.setMoving(t);
+		}
+		label.setText("Trains are now MOVING");
+	}
+	
+	private void stropTrains(ActionEvent e) {
+		for (Train t: controller.getTrains()) {
+			controller.setStopped(t);
+		}
+		label.setText("Trains are now STOPPED");
+	}
+	
+
+	
+	private void setupTrainPanel(double[] ad) {
+//		TrainLinePane tlp = new TrainLinePane();
+//					System.out.println(ad.length + " | "+controller.getTrains().size());
+		TrainLinePane tlp = new TrainLinePane(controller.getLine());
+		trainColors = new HashMap<>();
+		drawTrainColors(trainColors);
+		
+		int i = 0;
+		for (Train t : controller.getTrains()){
+			tlp.drawTrain(ad[i], t.getLength(), trainColors.get(t), t.getName());
+			i++;
+			controller.getLineStatus().putTrain(t, ad[i]);
+		}
+		
+		this.setCenter(tlp);
+	}
+	
+	
+	private void updateTrainPanel() {
+		LineStatus ls = controller.getLineStatus();
+		
+		TrainLinePane tlp = new TrainLinePane(controller.getLine());
+
+		for (Train t : controller.getTrains()){
+			System.out.println(controller.getLineStatus());
+			tlp.drawTrain(
+				ls.getTrainLocation(t),
+				t.getLength(),
+				trainColors.get(t),
+				t.getName());
+			}
+		
+		this.setCenter(tlp);
+	}
+}

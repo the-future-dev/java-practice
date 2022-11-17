@@ -1,0 +1,41 @@
+package sudoku.controller;
+
+public class MyController implements Controller {
+
+	@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String getCellLabel(int row, int col) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean setCell(int row, int col, String value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean endGame() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void saveGame() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String getEmptyCell() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

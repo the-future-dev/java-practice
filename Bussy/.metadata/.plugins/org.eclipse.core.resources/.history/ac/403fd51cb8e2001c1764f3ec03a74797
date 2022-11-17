@@ -1,0 +1,22 @@
+package bussy.model;
+
+import java.util.Map;
+import java.util.OptionalInt;
+import java.util.SortedSet;
+
+public class MyCercatore implements Cercatore {
+	
+	
+	@Override
+	public SortedSet<Percorso> cercaPercorsi(String fermataDa, String fermataA, OptionalInt durataMax) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Linea> getMappaLinee() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

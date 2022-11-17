@@ -1,0 +1,93 @@
+package unident.model;
+
+import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.OptionalInt;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+public class Carriera {
+	private SortedMap<AttivitaFormativa, List<Esame>> esami;
+	private NumberFormat numberFormat;
+	
+	public Carriera(Set<AttivitaFormativa> pianoDidattico) {
+		esami = new TreeMap<>(new Comparator<AttivitaFormativa>() {
+			@Override
+			public int compare(AttivitaFormativa o1, AttivitaFormativa o2) {
+				return o1.getNome().compareTo(o2.getNome());
+			}
+		});
+		
+		for (AttivitaFormativa af: pianoDidattico){
+			esami.put(af, new ArrayList<>());	
+		}
+		numberFormat = NumberFormat.getNumberInstance();
+		numberFormat.getNumberInstance(Locale.ITALY);
+	}
+	
+	public List<Esame> istanzeDi(AttivitaFormativa af){
+		return esami.get(af);
+	}
+	
+	public double mediaPesata() {
+		int cfu = 0;
+		double somma = 0;
+		for (AttivitaFormativa af : esami.keySet()) {
+			for (Esame e : istanzeDi(af)) {
+				if (e.getVoto().getValue().isPresent()) {
+					somma += e.getVoto().getValue().getAsInt() * af.getCfu();
+					cfu += af.getCfu();
+				}
+			}
+		}
+		return (somma / cfu);
+	}
+	
+	public void registra(Esame esame) {
+//		if (esame == null) throw new IOException("Null");
+		AttivitaFormativa af = esame.getAf();
+		List<Esame> esamiPrecedenti = esami.get(af);
+		boolean insert = false;
+		
+		if (esamiPrecedenti==null) {
+			insert = true;
+		} else {
+			insert = true;
+			for (Esame e : esamiPrecedenti) {
+				if (e.getDate().isAfter(esame.getDate())) {
+					System.out.println("Esame successivo");
+					insert = false;
+				}
+				if (e.getDate().equals(esame.getDate())) {
+					insert = false;
+				}
+				if (e.equals(esame) && e.getVoto().getValue().isPresent()) {
+					insert = false;
+				}
+			}
+		}
+		if (insert) {
+			istanzeDi(af).add(esame);
+		}
+	}
+	
+	public String toString() {
+		String str = "Esami sostenuti:\n";
+		for (AttivitaFormativa af : esami.keySet()) {
+			for (Esame e : istanzeDi(af)) {
+				str+= e.toString()+"";
+			}
+		}
+		System.out.println(str);
+		return str;
+	}
+}

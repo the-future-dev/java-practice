@@ -1,0 +1,21 @@
+package ubz.model;
+
+import ubz.persistence.DotazioneLoader;
+
+public class CassiereUbz extends Cassiere {
+	private Politiche p;
+	
+	public CassiereUbz(DotazioneLoader loader) {
+		super(loader);
+		p = loader.getPolitiche();
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	protected int calcolaQuantit‡DiQuestoTaglio(Taglio t, int importo){
+		
+		return 0;
+	}
+
+
+}

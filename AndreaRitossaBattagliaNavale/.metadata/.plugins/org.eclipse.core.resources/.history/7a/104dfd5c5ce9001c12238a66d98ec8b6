@@ -1,0 +1,16 @@
+package battleship.controller;
+
+import java.util.Map;
+
+import battleship.model.ShipItem;
+import battleship.model.ShipType;
+
+public class MyController extends AbstractController {
+
+	@Override
+	public int verify() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

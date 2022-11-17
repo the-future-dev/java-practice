@@ -1,0 +1,38 @@
+package crosswords.model;
+
+import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
+
+public class MyGame extends Scheme implements Game {
+	private Map<Integer, Optional<String>> charMap;
+	
+	public MyGame(int size) {
+		super(size);
+	}
+
+	@Override
+	public void setMapping(int num, String value) {
+		Optional<String> STR = Optional.of(value);
+		charMap.put(num, STR);
+	}
+
+	@Override
+	public Optional<String> getMapping(int num) {
+		return charMap.get(num);
+	}
+
+	@Override
+	public boolean isFull() {
+		
+	}
+	
+	public void setCellRow(int row, int [] values) {
+		super.setCellRow(row, values);
+	}
+	
+	public String toString() {
+		return super.toString();
+	}
+	
+}

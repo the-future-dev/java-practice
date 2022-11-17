@@ -1,0 +1,39 @@
+package sudoku.persistence;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.StringTokenizer;
+
+import sudoku.model.SudokuBoard;
+
+public class MySudokuReader implements SudokuReader {
+	private SudokuBoard sudoku;
+	
+	@Override
+	public SudokuBoard getSudoku() {
+		return this.sudoku;
+	}
+	
+	public MySudokuReader(Reader rdr) throws IOException {
+		if (rdr == null)
+			throw new IllegalArgumentException("Nullable");
+		BufferedReader br = new BufferedReader(rdr);
+		sudoku = parseGrid(br);
+	}
+	
+	private SudokuBoard parseGrid(BufferedReader myBr) throws IOException {
+		SudokuBoard insideSudoku = new SudokuBoard();
+		int rows = 0;
+		String line = "";
+		while(rows < insideSudoku.getSize() && ((line = myBr.readLine())!= null)) {
+			StringTokenizer tokenized = new StringTokenizer(line);
+			if (tokenized.countTokens() != 9) {
+				
+			}
+			rows++;
+		}
+		if (rows != 8)
+		return null;
+	}
+}

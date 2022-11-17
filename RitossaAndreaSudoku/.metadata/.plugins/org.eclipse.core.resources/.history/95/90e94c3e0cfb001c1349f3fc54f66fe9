@@ -1,0 +1,98 @@
+package sudoku.model;
+
+import java.util.OptionalInt;
+
+public class SudokuBoard {
+	OptionalInt [] [] board;
+	final int DIM = 9;
+	int fullCellNumber;
+	
+	public SudokuBoard() {
+		board = new OptionalInt[DIM][DIM];
+		for (int i = 0; i<DIM; i++) {
+			for (int j = 0; j<DIM; j++) {
+				board[i][j] = OptionalInt.empty();
+			}
+		}
+	}
+	
+	public void setCellRow(int row, int [] colNumbers) {
+		if (colNumbers==null || colNumbers.length!= DIM || row > DIM-1)
+			throw new IllegalArgumentException("not a good row of elements");
+		for (int i = 0; i<DIM; i++) {
+			if (colNumbers[i]<0)
+				throw new IllegalArgumentException("Not a good value");
+			board[row][i] = (colNumbers[i] == 0)? OptionalInt.empty() :  OptionalInt.of(colNumbers[i]);
+		}
+	}
+	
+	public OptionalInt getCell(int row, int col) {
+		if (!(row>= 0 && row <DIM) || !(row>= 0 && row <DIM))
+			throw new IllegalArgumentException("not a good row || col in getCell");
+		return board[row][col];
+	}
+	
+	public int getSize() {
+		return this.DIM;
+	}
+	
+	public void clearCell (int row, int col) {
+		if (!(row>= 0 && row <DIM) || !(row>= 0 && row <DIM))
+			throw new IllegalArgumentException("not a good row || col in clearCell");
+		board[row][col] = OptionalInt.empty();
+	}
+	
+	private boolean checkSquare3(int row, int col, int digit) {
+//		detect row
+		int rowIni = (row >= 0 &&  row <=2)? 0 : (row >= 3 &&  row <=5)? 3: 6;
+		int colIni = (col >= 0 &&  col <=2)? 0 : (col >= 3 &&  col <=5)? 3: 6;
+//		check
+		for(int i = rowIni; i<rowIni+3; i++) {
+			for (int j = colIni; j<colIni; j++) {
+				if (this.board[i][j].isPresent() && this.board[i][j].getAsInt() == digit) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	private boolean checkCol (int col, int digit) {
+		for (int i = 0; i<DIM; i++) {
+			if (this.board[i][col].isPresent() && this.board[i][col].getAsInt() == digit) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private boolean checkRow (int row, int digit) {
+		for (int i = 0; i<DIM; i++) {
+			if (this.board[row][i].isPresent() && this.board[row][i].getAsInt() == digit) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean setCell(int row, int col, int digit) {
+		if (!(row>= 0 && row <DIM) || !(row>= 0 && row <DIM) || !(digit< 0))
+			throw new IllegalArgumentException("not a good row || col || digit in setCell");
+		if (checkSquare3(row, col, digit) && (checkCol(col, digit)) && (checkRow(row, digit)) ) {
+			board[row][col] = (digit == 0) ? OptionalInt.empty() : OptionalInt.of(digit);
+			return true;
+		} else {
+			return false;	
+		}
+	}
+	
+	public int getEmptyCellNumber() {
+		int count = 0;
+		for (int i = 0; i< DIM; i++) {
+			for (int j = 0; j<DIM; j++) {
+				if (board[i][j].isEmpty())
+					count++;
+			}
+		}
+		return count;
+	}
+}

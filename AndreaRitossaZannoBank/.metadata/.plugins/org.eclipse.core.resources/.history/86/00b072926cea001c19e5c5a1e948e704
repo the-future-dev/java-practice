@@ -1,0 +1,5 @@
+package ubz.model;
+
+public class CassiereUbz extends Cassiere {
+
+}

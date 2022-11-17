@@ -1,0 +1,9 @@
+package elections.persistence;
+
+import java.io.IOException;
+
+import elections.model.RisultatoElezioni;
+
+public interface SeggiWriter {
+	void stampaSeggi(RisultatoElezioni risultato, String msg) throws IOException;
+}

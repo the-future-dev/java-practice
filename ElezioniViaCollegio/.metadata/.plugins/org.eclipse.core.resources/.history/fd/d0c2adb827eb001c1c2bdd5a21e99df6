@@ -1,0 +1,31 @@
+package elbonia.model;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class CalcolatoreSeggiMaggioritario implements CalcolatoreSeggi {
+
+	@Override
+	public Map<String, Integer> assegnaSeggi(int dimensioneCollegio, List<Collegio> listaCollegi) {
+		List<Collegio> raggruppati = Collegio.raggruppaCollegi(listaCollegi, dimensioneCollegio);
+		Map<String, Integer> finalVotes = new HashMap<String, Integer>();
+		for (Collegio c :raggruppati) {
+			for (Partito p : c.getPartiti()) {
+				Integer votiPartito = mappaVoti.get(p.getNome());
+				mappaVoti.put(p.getNome(), p.getVoti()+(votiPartito==null ? 0 : votiPartito));
+			}
+		}
+		for (Collegio c : raggruppati) {
+			Map<String,Integer> mappaVoti = new HashMap<String,Integer>(); 
+			for (Collegio c : listaCollegi){
+				for (Partito p : c.partiti) {
+					Integer votiPartito = mappaVoti.get(p.getNome());
+					mappaVoti.put(p.getNome(), p.getVoti()+(votiPartito==null ? 0 : votiPartito));
+				}
+			}
+		}
+		return null;
+	}
+
+}

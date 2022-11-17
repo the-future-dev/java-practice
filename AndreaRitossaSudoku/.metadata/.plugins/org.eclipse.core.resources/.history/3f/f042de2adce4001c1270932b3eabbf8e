@@ -1,0 +1,24 @@
+package sudoku.controller;
+
+import sudoku.model.SudokuBoard;
+
+public class MyController extends AbstractController {
+
+	public MyController(SudokuBoard sud) {
+		super(sud);
+	}
+
+	@Override
+	public String getCellLabel(int row, int col) {
+		
+		return null;
+	}
+
+	@Override
+	public boolean setCell(int row, int col, String value) {
+		if ()
+		this.sudoku.setCell(row, col, value);
+		return false;
+	}
+
+}

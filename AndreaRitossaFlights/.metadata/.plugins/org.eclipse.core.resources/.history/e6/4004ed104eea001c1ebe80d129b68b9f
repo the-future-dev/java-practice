@@ -1,0 +1,6 @@
+package flightTracker.model;
+
+public class Flight {
+	private String id;
+	private List<FlightPos> tracks;
+}

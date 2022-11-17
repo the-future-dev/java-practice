@@ -1,0 +1,20 @@
+package dentinia.governor.persistence;
+
+import java.io.IOException;
+
+import dentinia.governor.model.Elezioni;
+
+public class MySeggiWriter implements SeggiWriter {
+	
+	private String outputFinaleName;
+	
+	public MySeggiWriter(String name) {
+		
+	}
+	@Override
+	public void stampaSeggi(Elezioni elezioni, String msg) throws IOException {
+		
+
+	}
+
+}

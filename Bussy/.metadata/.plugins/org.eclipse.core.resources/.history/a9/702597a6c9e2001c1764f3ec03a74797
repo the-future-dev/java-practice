@@ -1,0 +1,32 @@
+package bussy.ui;
+
+import bussy.ui.controller.Controller;
+
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+
+public class MainPane extends BorderPane {
+	private Button button;
+	private ComboBox<String> comboA;
+	private ComboBox<String> comboDa;
+	private Controller controller;
+	private TextArea output;
+	
+	public MainPane(Controller controller) {
+		this.controller = controller;
+		
+		button = new Button("Cerca Percorso");
+		button.setOnAction(this::myHandle);
+		
+		
+		
+		this.setBottom(button);
+	}
+	
+	public void myHandle(ActionEvent e) {
+		
+	}
+}

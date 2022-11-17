@@ -1,0 +1,19 @@
+package minirail.persistence;
+
+import java.util.List;
+
+import minirail.model.Line;
+
+public class MyLineReader implements LineReader {
+	private Line line;
+	private String lineKeyWord;
+	private String lineName;
+	private List<Section> sections;
+	
+	@Override
+	public Line getLine() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

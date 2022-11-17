@@ -1,0 +1,79 @@
+package tris.model;
+
+public class MyBoard implements Board {
+
+	private char [][] board;
+	private static final int DIM = 3;
+	
+	public MyBoard(char[][] array) {
+		board = new char[DIM][DIM];
+	}
+	
+	@Override
+	public String getRow(int i) {
+		String str = "";
+		for (int j = 0; j<DIM; j++)
+			str+=board[i][j];
+		return str;
+	}
+
+	@Override
+	public String getColumn(int i) {
+		String str = "";
+		for (int j = 0; j<DIM; j++)
+			str+=board[j][i];
+		return str;
+	}
+
+	@Override
+	public String getDiagonal(int i) {
+		if (i == 0) {
+			String str = "";
+			for (int j = 0; j<DIM; j++)
+				str+=board[j][j];
+			return str;
+		} else {
+			String str = "";
+			for (int j = DIM-1; j>=0; j--)
+				str+=board[j][j];
+			return str;
+		}
+	}
+
+	@Override
+	public boolean winning() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean winningRow(int i) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean winningColumn(int i) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean winningDiagonal(int i) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean adjacent(Board that) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int distanceFrom(Board that) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

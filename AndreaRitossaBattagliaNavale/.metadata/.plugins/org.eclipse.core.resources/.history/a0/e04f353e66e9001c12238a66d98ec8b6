@@ -1,0 +1,31 @@
+package battleship.controller;
+
+import java.util.Map;
+
+import battleship.model.ShipBoard;
+import battleship.model.ShipItem;
+import battleship.model.ShipType;
+
+public class MyController extends AbstractController {
+
+	public MyController(ShipBoard solutionBoard, ShipBoard initialBoard) {
+		super(solutionBoard, initialBoard);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int verify() {
+		int vuote = 0;
+		for (int i = 0; i<playerBoard.getSize(); i++) {
+			for (int j = 0; j<playerBoard.getSize(); j++) {
+				if (playerBoard.getCell(i, j).equals(ShipItem.EMPTY)) {
+					vuote++;
+				}
+			}
+		}
+		if (vuote == 0)
+			this.gameOver = true;
+		return playerBoard.getSize()*playerBoard.getSize()-vuote;
+	}
+
+}

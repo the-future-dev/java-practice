@@ -1,0 +1,61 @@
+package mastermind.model;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.TreeMap;
+
+public class MasterMind extends Gioco {
+
+	public MasterMind(int maxTentativi, int dim) {
+		super(maxTentativi, dim);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void sorteggiaCombinazione(Combinazione segreta) {
+		Random r = new Random();
+		if (segreta.getPiolo(0) != null) {
+			for (int i = 0; i<this.dimensione(); i++) {
+				PioloDiGioco pG = PioloDiGioco.values()[r.nextInt(8)];
+				segreta.setPiolo(i, pG);
+			}
+		} else {
+			System.out.println("Gia inizializzata: \n"+segreta);
+		}
+	}
+	private Map<PioloDiGioco, Integer> combinazioneMapped(Combinazione tentativo){
+		Map<PioloDiGioco, Integer> tentativoInCifre = new TreeMap<>();
+		
+		for (PioloDiGioco pdG: PioloDiGioco.values()) {
+			tentativoInCifre.put(pdG, 0);
+		}
+		for (int i = 0; i<tentativo.dim(); i++) {
+			PioloDiGioco pW = tentativo.getPiolo(i);
+			Integer w = tentativoInCifre.get(pW);
+			tentativoInCifre.put(pW, w+1);
+		}
+		return tentativoInCifre;
+	}
+	@Override
+	protected Risposta calcolaRisposta(Combinazione tentativo) {
+		Risposta response = new Risposta(this.dimensione());
+//		Map<PioloDiGioco, Integer> tentativoInCifre = combinazioneMapped(tentativo);
+		Map<PioloDiGioco, Integer> inside = combinazioneMapped(segreta); 
+		for (int i = 0; i<tentativo.dim(); i++) {
+			PioloDiGioco pTentatoInI = tentativo.getPiolo(i);
+			PioloDiGioco pRispostInI = segreta.getPiolo(i);
+			PioloRisposta pR;
+			if (pTentatoInI.equals(pRispostInI)) {
+				pR = PioloRisposta.NERO;
+			} else if (inside.get(pTentatoInI) != 0) {
+				pR = PioloRisposta.BIANCO;
+			} else {
+				pR = PioloRisposta.VUOTO;
+			}
+			response.setPiolo(i, pR);
+		}
+		return response;
+	}
+
+}

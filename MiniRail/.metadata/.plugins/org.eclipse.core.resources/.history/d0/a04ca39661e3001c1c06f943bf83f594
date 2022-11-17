@@ -1,0 +1,41 @@
+package minirail.model;
+
+import java.util.Map;
+
+public class MyRunner implements Runner {
+	private Gauge gauge;
+	private Map<String, LineStatus> lines;
+	private StringBuilder logger;
+
+	public MyRunner(Map<String, LineStatus> mLS, Gauge g) {
+		this.gauge = g;
+		this.lines = mLS;	
+	}
+	
+	@Override
+	public void clock(double period) {
+		for (LineStatus ls : lines.values()) {
+			for (Train t : ls.getAllTrains()) {
+				t.
+			}
+		}
+	}
+	
+	private void moveTrain(LineStatus ls, Train t, double period) {
+		
+	}
+
+	@Override
+	public Map<String, LineStatus> getLines() {
+		return this.lines;
+	}
+
+	@Override
+	public Gauge getGauge() {
+		return this.gauge;
+	}
+	
+	public String toString() {
+		return "";
+	}
+}

@@ -1,0 +1,8 @@
+package ghigliottina.model;
+
+public class Ghigliottina {
+
+	private Iterator<Terna> iterator;
+	
+	
+}

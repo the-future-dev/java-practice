@@ -1,0 +1,5 @@
+package battleship.persistence;
+
+public class MyBattleshipReader {
+
+}

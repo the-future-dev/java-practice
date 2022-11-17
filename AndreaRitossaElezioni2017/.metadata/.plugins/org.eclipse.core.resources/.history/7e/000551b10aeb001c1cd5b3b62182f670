@@ -1,0 +1,47 @@
+package elections.ui.javafx;
+
+import elections.ui.controller.Controller;
+import javafx.geometry.Pos;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+
+public class ElectionPane extends BorderPane {
+	private Controller controller;
+	private Slider slider;
+	private TextArea situa;
+	private PieChart situaChart;
+	private Button calcola;
+	private Button salva;
+	
+	public ElectionPane(Controller c) {
+		controller = c;
+		
+		HBox sbarramentoPane = new HBox();
+		sbarramentoPane.setAlignment(Pos.CENTER_LEFT);
+		sbarramentoPane.getChildren().add(new Label("Sbarramento %"));
+		slider = new Slider(0, 10, 0);
+		slider.setPrefWidth(300);
+		slider.setShowTickMarks(true);
+		slider.setShowTickLabels(true);
+		slider.setMajorTickUnit(1);
+		slider.setSnapToTicks(true);
+		slider.setBlockIncrement(0.5);
+		sbarramentoPane.getChildren().add(slider);
+		
+		
+		
+		this.setTop(sbarramentoPane);
+
+	}
+	
+	private void populateSitua() {
+		
+	}
+	
+//	private void populate
+}

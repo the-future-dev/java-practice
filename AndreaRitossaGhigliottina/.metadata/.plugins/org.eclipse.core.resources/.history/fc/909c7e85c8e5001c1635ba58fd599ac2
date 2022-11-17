@@ -1,0 +1,20 @@
+package ghigliottina.model;
+
+import java.util.Iterator;
+import java.util.List;
+
+public class Ghigliottina {
+
+	private Iterator<Terna> iterator;
+	private String rispostaEsatta;
+	private List<Terna> terne;
+	
+	public Ghigliottina(List<Terna> terne, String rE) {
+		if (terne == null || rE == null)
+			throw new IllegalArgumentException("Nullable parameter to Ghigliottina constructor");
+		
+		this.rispostaEsatta = rE;
+		this.terne = terne;
+	}
+	
+}

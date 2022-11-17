@@ -1,0 +1,17 @@
+package minesweeper.persistence;
+
+public class MyConfigReader implements ConfigReader {
+
+	@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getMinesNumber() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

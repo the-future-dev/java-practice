@@ -1,0 +1,24 @@
+package flightTracker.model;
+
+import java.util.List;
+
+public class Flight {
+	private String id;
+	private List<FlightPos> tracks;
+	
+	public Flight(String id, List<FlightPos> ts) {
+		this.id = id;
+		this.tracks = ts;
+	}
+	
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public List<FlightPos> getTracks() {
+		return tracks;
+	}
+	
+}

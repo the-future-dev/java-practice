@@ -1,0 +1,5 @@
+package rfd.persistence.test;
+
+public class MyRailwayLineReader {
+
+}

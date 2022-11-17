@@ -1,0 +1,48 @@
+package dentinia.governor.model;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class LeggeElettoraleDHondt implements LeggeElettorale {
+
+	@Override
+	public RisultatoElezioni apply(Elezioni t) {
+//		Elezioni t
+//		private SortedMap<Partito, Long> mappaVoti;
+//		private long seggiDaAssegnare;
+//		private LeggeElettorale algoritmo;
+		
+		ArrayList<Quoziente> quozienti = new ArrayList<>();
+		
+		for (Partito p : t.getPartiti()) {
+			for (int i = 1; i< seggiDaAssegnare; i++) {
+				Quoziente q = new Quoziente(p, (long)Math.floor(t.getVoti(p)/i));
+				quozienti.add(q);
+			}
+//			System.out.println("\\t| "+quozienti.size());
+		}
+		Collections.sort(quozienti);
+		ArrayList<Quoziente> selezionati = new ArrayList<>();
+		
+		int i = 0;
+		for (Quoziente q : quozienti) {
+			if (i<t.getSeggiDaAssegnare()) {
+				selezionati.add(q);
+				i=i+1;
+			}
+		}
+		
+		RisultatoElezioni re = new RisultatoElezioni(t.getPartiti());
+		
+		for (Partito p : t.getPartiti()) {
+			int nSeggiPartito = 0;
+			for (Quoziente q : selezionati) {
+				if (q.getPartito().equals(p)) nSeggiPartito++;
+			}
+			re.setSeggi(p, nSeggiPartito);
+		}
+		
+		return re;
+	}
+
+}

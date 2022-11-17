@@ -1,0 +1,21 @@
+package sudoku.persistence;
+
+import java.io.Reader;
+
+import sudoku.model.SudokuBoard;
+
+public class MySudokuReader implements SudokuReader {
+	private SudokuBoard sudoku;
+	
+	@Override
+	public SudokuBoard getSudoku() {
+		return this.sudoku;
+	}
+	
+	public MySudokuReader(Reader rdr) {
+		if (rdr == null)
+			throw new IllegalArgumentException("Nullable");
+		
+	}
+
+}

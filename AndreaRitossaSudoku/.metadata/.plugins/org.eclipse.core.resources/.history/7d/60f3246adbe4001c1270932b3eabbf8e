@@ -1,0 +1,70 @@
+package sudoku.persistence;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+
+import sudoku.model.SudokuBoard;
+
+public class MySudokuReader implements SudokuReader {
+	private SudokuBoard sudoku;	
+	
+	@Override
+	public SudokuBoard getSudoku() {
+		return this.sudoku;
+	}
+	
+	public MySudokuReader(Reader reader) throws IOException,BadFileFormatException{
+		if (reader == null)
+			throw new IOException("Bad reader");
+		BufferedReader br = new BufferedReader(reader);
+		this.sudoku = parseGrid(br);
+		
+	}
+	
+	private SudokuBoard parseGrid(BufferedReader br) throws IOException, BadFileFormatException {
+		SudokuBoard sb = new SudokuBoard();
+		String line;
+		
+		int row = 0;
+		while ((line = br.readLine())!= null) {
+			if (row >= sb.getSize())
+				throw new BadFileFormatException("not good number of row");
+			String [] tokens = line.split("\t");
+			int[] numRow = new int[sb.getSize()]; //di impostazione DIM = 9
+			int col = 0;
+			for (String t : tokens) {
+				if (col >= sb.getSize())
+					throw new BadFileFormatException("not good number of row");
+				t = t.trim();
+				if (t.length() != 1) {
+					throw new BadFileFormatException("Not good digit: |"+t+"|");
+				}
+				if (t.equals("#")) {
+					numRow[col] = 0;
+					nZeros++;
+				} else if (t.charAt(0) <= '9' && t.charAt(0) >= '0') {
+					try {
+						numRow[col] = Integer.parseInt(t);
+					} catch(Error e) {
+						throw new Error(e.getMessage());
+					}
+				} else {
+					throw new BadFileFormatException("not a good digit");
+				}
+				col++;
+				if (nZeros >7)
+					throw new BadFileFormatException("too much null");
+			}
+			if (col != sb.getSize())
+				throw new BadFileFormatException("not good number of row");
+			
+			sb.setCellRow(row, numRow);
+			row++;
+		}
+		if (row != sb.getSize())
+			throw new BadFileFormatException("not good number of row");
+			
+		return sb;
+	}
+}

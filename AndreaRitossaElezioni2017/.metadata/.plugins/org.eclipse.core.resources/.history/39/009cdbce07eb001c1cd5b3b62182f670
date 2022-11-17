@@ -1,0 +1,22 @@
+package elections.persistence;
+
+import java.io.IOException;
+
+import elections.model.RisultatoElezioni;
+
+public class MySeggiWriter implements SeggiWriter {
+
+	private Reader rdr;
+	public MySeggiWriter(Reader rdr) {
+		if (rdr == null)
+			throw new IllegalArgumentException("nullable input");
+		this.rdr = rdr;
+		
+	}
+	
+	@Override
+	public void stampaSeggi(RisultatoElezioni risultato, String msg) throws IOException {
+		
+	}
+
+}

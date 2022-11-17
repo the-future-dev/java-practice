@@ -1,0 +1,29 @@
+package bussy.model;
+
+import java.util.Map;
+import java.util.OptionalInt;
+import java.util.SortedSet;
+
+public class MyCercatore implements Cercatore {
+//	IllegalArgumentException
+	private Map<String, Linea> mappaLinee;
+	
+	public MyCercatore(Map<String, Linea> mappaLinee) {
+		if (mappaLinee == null || mappaLinee.isEmpty()) throw new IllegalArgumentException("Not a good mappa di linee");
+		this.mappaLinee = mappaLinee;
+	}
+	
+	@Override
+	public SortedSet<Percorso> cercaPercorsi(String fermataDa, String fermataA, OptionalInt durataMax) {
+		if (fermataDa == null || fermataA == null) throw new IllegalArgumentException("Not a good fermata");
+		
+		return null;
+	}
+
+	@Override
+	public Map<String, Linea> getMappaLinee() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

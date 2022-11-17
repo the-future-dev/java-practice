@@ -1,0 +1,67 @@
+package dentinia.governor.persistence;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
+import java.util.StringTokenizer;
+
+import dentinia.governor.model.Elezioni;
+import dentinia.governor.model.Partito;
+
+public class MyVotiReader implements VotiReader {
+	private Elezioni elezioni;
+	private BufferedReader reader;
+	private long seggiDaAssegnare;
+	
+	
+	public MyVotiReader(Reader r) throws IOException, BadFileFormatException{
+		if (r == null) throw new IOException("null reader");
+		reader = new BufferedReader(r);
+
+		caricaElementi(elezioni);
+	}
+	
+	private void caricaElementi(Elezioni el) throws IOException, BadFileFormatException{
+		String firstLine = reader.readLine();
+		String secondLine = reader.readLine();
+		if (reader.readLine() != null || firstLine == null || secondLine == null) throw new BadFileFormatException("Not right number of lines");
+		
+		StringTokenizer a = new StringTokenizer(firstLine);
+		if (!a.nextToken().equals("SEGGI")) throw new BadFileFormatException("2");
+		
+		try{
+			seggiDaAssegnare = Long.parseLong(a.nextToken());
+			elezioni = new Elezioni(seggiDaAssegnare);
+		}catch (Error e ) {
+			throw new BadFileFormatException("3");
+		}
+		
+		String[] div = secondLine.split(",");
+		NumberFormat nf = NumberFormat.getInstance(Locale.ITALY);
+		
+		for (String s : div) {
+			StringTokenizer stk = new StringTokenizer(s);
+			String name= "";
+			while (stk.countTokens()!=1) {
+		         name+= " "+stk.nextToken();
+		     }
+			System.out.println(""+nf.parse(stk.nextToken()));
+			long num = (long)(nf.parse(stk.nextToken()));
+			System.out.println(num+"|");
+			elezioni.setVoti(new Partito(name), num);
+		}
+		
+	}
+	@Override
+	public Elezioni getElezioni() {
+		// TODO Auto-generated method stub
+		return this.elezioni;
+	}
+	
+	public void main(String[] args) {
+		
+	}
+}

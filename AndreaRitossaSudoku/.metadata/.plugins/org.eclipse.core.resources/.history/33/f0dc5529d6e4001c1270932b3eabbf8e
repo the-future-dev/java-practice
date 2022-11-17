@@ -1,0 +1,142 @@
+package sudoku.model;
+
+import java.util.Optional;
+import java.util.OptionalInt;
+
+public class SudokuBoard {
+	private OptionalInt [][] board;
+	private final int DIM = 9;
+	private int fullCelNumber;
+	
+	public SudokuBoard() {
+		board = new OptionalInt[DIM][DIM];
+//		inizializzazione di una scacchiera vuota
+		for (int i = 0; i<DIM; i++) {
+			for (int j = 0; j<DIM; j++) {
+				board[i][j] = OptionalInt.empty();
+			}
+		}
+	}
+	
+	public OptionalInt getCell(int row, int col) {
+		if (board[row][col].isEmpty()) {
+			return OptionalInt.empty();
+		}
+		return board[row][col];
+	}
+	
+	public void clearCell(int row, int col) {
+		if (row >= DIM || row < 0 || col >= DIM || col< 0)
+			throw new IllegalArgumentException("Not right num");
+		board[row][col] = OptionalInt.empty();
+	}
+	
+	public int getEmptyCellNumber() {
+		int eCells = 0;
+		for (OptionalInt [] row : board) {
+			for (OptionalInt oI: row) {
+				if (oI.isEmpty())
+					eCells++;
+			}
+		}
+		return eCells;
+	}
+	
+	public int getSize() {
+		return this.DIM;
+	}
+	
+	public boolean isFull() {
+		int i =0;
+		for (OptionalInt [] row : board)
+			for (OptionalInt cell : row)
+				if( cell.isEmpty())
+					i++;
+		return (i == 0);
+	}
+	
+//	private int max(int x) {
+//		
+//	}
+//	private int min(int x) {
+//		
+//	}
+	
+	public void setCellRow(int row, int[] numValues) {
+		if (numValues == null || row >= DIM || numValues.length!= DIM)
+			throw new IllegalArgumentException("Not good parameters");
+		for (int i = 0; i<DIM; i++) {
+			setCell(row, i, numValues[i]);
+//			if () {
+//				throw new Error("Error in setting"+row+" | "+i);
+//			}
+		}
+	}
+	public boolean setCell(int row, int col, int digit) {
+
+		for (int i = 0; i<DIM; i++) {
+			if (getCell(row, i).isPresent() && getCell(row, i).getAsInt() == digit){
+				return false;
+			}
+			if (getCell(i, col).isPresent() && getCell(i, col).getAsInt() == digit) {
+				return false;
+			}
+		}
+//		0..2 | 3..5 | 6..8
+		int iniR = 0, iniC =0;
+		
+		if (row>= 0 && row <=2) {
+			iniR = 0;
+		} else if (row >= 3 && row <= 5) {
+			iniR = 3;
+		} else if (row >= 6 && row <= 8) {
+			iniR = 6;
+		}
+		
+		if (col>= 0 && col<=2) {
+			iniC = 0;
+		} else if (col >= 3 && col <= 5) {
+			iniC = 3;
+		} else if (col >= 6 && col <= 8) {
+			iniC = 6;
+		}
+		for (int i = iniR; i< iniR+3; i++) {
+			for (int j = iniC; j< iniC+3; j++) {
+				if (getCell(i, j).isPresent() && getCell(i, j).getAsInt() == digit) {
+					return false;
+				}
+			}
+		}
+		
+		if (digit > DIM || digit < 0 || row >= DIM || col >= DIM || col < 0 || row < 0) {
+			throw new IllegalArgumentException("not in length");
+		}
+		if (digit == 0) {
+			board[row][col] = OptionalInt.empty();
+		} else {
+			board[row][col] = OptionalInt.of(digit);	
+		}
+		return (board[row][col].equals(OptionalInt.of(digit)));
+	}
+	
+	public String toString() {
+		String str = "SUDOKU BOARD:\n";
+		for (OptionalInt [] row : board) {
+			for (OptionalInt cell : row) {
+				if( cell.isPresent()) {
+					if (cell.getAsInt() == 0) {
+						str+= "X";
+					} else {
+						str+= cell.getAsInt();
+					}
+				} else {
+					str+= "null";
+				}
+				str+="\t";
+			}
+			str+="\n";
+		}
+		str+="\n";
+		return str;
+	}
+}

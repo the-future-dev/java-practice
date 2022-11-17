@@ -1,0 +1,89 @@
+package gasforlife.model;
+
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class Bill {
+	private BillingFrequency billFreq;
+	private double consumption;
+	private double costm3;
+	private double extraCostm3;
+	private double fixedCost;
+	private Optional<Month> month;
+	private List<Share> quotes;
+	private double value;
+	private double variableCost;
+	
+	private DateTimeFormatter dtf;
+
+	
+	public boolean addShare(Share quote) {
+		int iniSize = quotes.size();
+		quotes.add(quote);
+		return (iniSize + 1) == quotes.size();
+	}
+	
+	
+	
+	public Bill(BillingFrequency billFreq, double total,  double fixedCost, double variableCost,
+			double consumption, double costm3, double extraCostm3, Optional<Month> month) {
+//		List<Share> quotes,
+		if (billFreq == null || consumption<=0 || costm3<=0 || extraCostm3<=0
+				|| fixedCost<=0 || month== null ||total<=0 || variableCost<=0) {
+			throw new IllegalArgumentException("nullable argument in creating Bill");
+		}
+		this.billFreq = billFreq;
+		this.consumption = consumption;
+		this.costm3 = costm3;
+		this.extraCostm3 = extraCostm3;
+		this.fixedCost = fixedCost;
+		this.month = month;
+		this.quotes = new ArrayList<>();
+		this.value = total;
+		this.variableCost = variableCost;
+		dtf.ofPattern("MMMM");
+	}
+
+
+
+	public BillingFrequency getBillFreq() {
+		return billFreq;
+	}
+	public double getConsumption() {
+		return consumption;
+	}
+	public double getCostm3() {
+		return costm3;
+	}
+	public double getExtraCostm3() {
+		return extraCostm3;
+	}
+	public double getFixedCost() {
+		return fixedCost;
+	}
+	public Optional<Month> getMonth() {
+		return month;
+	}
+	public String getMonthAsString() {
+		return month.isPresent() ? month.toString(): "";
+	}
+	public List<Share> getShares() {
+		return quotes;
+	}
+	public double getValue() {
+		return value;
+	}
+	public double getVariableCost() {
+		return variableCost;
+	}
+	@Override
+	public String toString() {
+		return "Bill [billFreq=" + billFreq + ", consumption=" + consumption + ", costm3=" + costm3 + ", extraCostm3="
+				+ extraCostm3 + ", fixedCost=" + fixedCost + ", month=" + month + ", quotes=" + quotes + ", value="
+				+ value + ", variableCost=" + variableCost + "]";
+	}
+	
+}

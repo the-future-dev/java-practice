@@ -1,0 +1,17 @@
+package qa.persistence;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.List;
+
+import qa.model.Misura;
+
+public class MyMisureReader implements MisureReader {
+
+	@Override
+	public List<Misura> leggiMisure(Reader r) throws IOException, BadFileFormatException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

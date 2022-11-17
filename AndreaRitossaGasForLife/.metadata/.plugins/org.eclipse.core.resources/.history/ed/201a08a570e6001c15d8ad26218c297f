@@ -1,0 +1,60 @@
+package gasforlife.persistence;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.TreeMap;
+
+public class MyConsumptionReader implements ConsumptionReader {
+	private final double Fattore_Conversione = 10.69;
+	private Map<String, List<Double>> gasConsumption;
+	
+	public MyConsumptionReader(Reader reader) throws IOException, BadFileFormatException {
+		if (reader == null)
+			throw new IOException("nullable reading");
+		loadAllItems(reader);
+	}
+	
+	@Override
+	public Map<String, List<Double>> getItems() {
+		return null;
+	}
+	
+//	1-1A : 1300|1069|1069|780|780|0|0|0|0|780|1400|1400
+//	7-2A : 930|940|900|680|680|0|0|0|0|680|860|8600
+	private void loadAllItems(Reader reader) throws IOException, BadFileFormatException {
+		BufferedReader BR = new BufferedReader(reader);
+		String line;
+		gasConsumption = new TreeMap<>();
+		
+		while((line = BR.readLine())!= null) {
+			List<Double> lDoubles = new ArrayList<>();
+			String[] first= line.split(":");
+			for (String s: first) {
+				s.trim();
+			}
+			if (first.length != 2)
+				throw new BadFileFormatException("Reading name: "+ first.length);
+			
+			StringTokenizer second= new StringTokenizer(first[1], "|");
+			
+			if (second.length != 12)
+				throw new BadFileFormatException("Reading doubles: "+ second.length);
+			
+			for (String s : second) {
+				try {
+					lDoubles.add(Double.parseDouble(s.trim()) / Fattore_Conversione);
+				}catch(Error e) {
+					throw new BadFileFormatException("Not a NUMBER");
+				}
+			}
+			gasConsumption.put(first[0].trim(), lDoubles);
+			System.out.println(gasConsumption.size());
+		}	
+	}
+
+}

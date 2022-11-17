@@ -1,0 +1,38 @@
+package minesweeper.model;
+
+public class PlayerMineField extends MineField {
+	
+	private int hiddenCells;
+	
+	public PlayerMineField(int size) {
+		if (size == 0) {
+			super(10);
+		} else {
+			super(size);
+		}
+	}
+
+	@Override
+	protected void init() {
+		hiddenCells = 0;
+		for(int i = 0; i< getSize(); i++){
+			for (int j = 0; j< getSize(); j++) {
+				setCell(i, j, new Cell(CellType.HIDDEN));
+				hiddenCells++;
+			}
+		}
+	}
+	
+	public int getHiddenCellsNumber() {
+		return hiddenCells;
+	}
+	
+	@Override
+	protected void setCell(int row, int col, Cell cell) {
+		if (cell.getType().equals(CellType.HIDDEN)) {
+			throw new UnsupportedOperationException("non si può sostituire una hidden con una hidden");
+		}
+		super.setCell(row, col, cell);
+		hiddenCells--;
+	}
+}

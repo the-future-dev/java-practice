@@ -1,0 +1,24 @@
+package mastermind.persistence;
+
+import java.io.PrintWriter;
+
+import mastermind.model.Gioco;
+
+public class MyGameSaver implements GameSaver {
+	private PrintWriter pw;
+	public MyGameSaver(PrintWriter pw) {
+		this.pw = pw;
+	}
+	@Override
+	public void save(Gioco gioco) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

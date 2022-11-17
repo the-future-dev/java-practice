@@ -1,0 +1,49 @@
+package flightTracker.ui;
+
+import flightTracker.model.Flight;
+import flightTracker.persistence.FlightReader;
+import flightTracker.ui.controller.Controller;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+
+public class MainPane extends BorderPane {
+	private GeoCanvas canvas;
+	private CheckBox checkbox;
+	private Controller controller;
+	private ComboBox<String> flightCombo;
+	
+	public MainPane(GeoMap g, Controller c) {
+		this.canvas = new GeoCanvas(g);
+		this.controller = c;
+		
+		HBox top = new HBox();
+		flightCombo = new ComboBox<>();
+		flightCombo.setItems(
+				controller.getFlights()
+			);
+		checkbox = new CheckBox();
+		top.getChildren().addAll(new Label("Voli Disponibili: "), flightCombo, checkbox, new Label("Voli multipli"));
+		
+		this.setCenter(canvas);
+		this.setTop(top);
+	}
+	public void myHandler(ActionEvent e) {
+		Reader r = new Reader(new FileReader(flightCombo.getValue()));
+		Flight f = controller.load(, null)
+		if (fName != null) {
+			Flight f = controller.get);
+			
+			canvas.drawPoints(controller.getPoints(null))
+		}
+		
+	}
+	
+	private void plotFlight(Flight f) {
+		
+	}
+}

@@ -1,0 +1,32 @@
+package dentinia.governor.persistence;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
+
+import dentinia.governor.model.Elezioni;
+
+public class MySeggiWriter implements SeggiWriter {
+	
+	private String outputFinaleName;
+	
+	public MySeggiWriter(String name) {
+		this.outputFinaleName = name;
+	}
+	
+	@Override
+	public void stampaSeggi(Elezioni elezioni, String msg) throws IOException {
+		DateTimeFormatter formatterFull = DateTimeFormatter
+				.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM)
+				.withLocale(Locale.ITALY);
+		ZonedDateTime t = ZonedDateTime.now();
+		
+		PrintWriter f = new PrintWriter(new FileWriter(outputFinaleName));
+		f.println(t.format(formatterFull));
+		f.println("Metodo D'Hondt con sbarramento del 0.0%");
+	}
+}

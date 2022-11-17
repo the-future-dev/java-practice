@@ -1,0 +1,60 @@
+package sudoku.model;
+
+import java.util.OptionalInt;
+
+public class SudokuBoard {
+	OptionalInt [] [] board;
+	final int DIM = 9;
+	int fullCellNumber;
+	
+	public SudokuBoard() {
+		board = new OptionalInt[DIM][DIM];
+		for (int i = 0; i<DIM; i++) {
+			for (int j = 0; j<DIM; j++) {
+				board[i][j] = OptionalInt.empty();
+			}
+		}
+	}
+	
+	public void setCellRow(int row, int [] colNumbers) {
+		if (colNumbers==null || colNumbers.length!= DIM || row > DIM-1)
+			throw new IllegalArgumentException("not a good row of elements");
+		for (int i = 0; i<DIM; i++) {
+			if (colNumbers[i]<0)
+				throw new IllegalArgumentException("Not a good value");
+			board[row][i] = (colNumbers[i] == 0)? OptionalInt.empty() :  OptionalInt.of(colNumbers[i]);
+		}
+	}
+	
+	public OptionalInt getCell(int row, int col) {
+		if (!(row>= 0 && row <DIM) || !(row>= 0 && row <DIM))
+			throw new IllegalArgumentException("not a good row || col in getCell");
+		return board[row][col];
+	}
+	
+	public int getSize() {
+		return this.DIM;
+	}
+	
+	public void clearCell (int row, int col) {
+		if (!(row>= 0 && row <DIM) || !(row>= 0 && row <DIM))
+			throw new IllegalArgumentException("not a good row || col in clearCell");
+		board[row][col] = OptionalInt.empty();
+	}
+	
+	private boolean checkSquare3(int row, int col) {
+		//detect
+		int rowIni = (row >= 0 &&  row <=2)? 0 : (row >= 3 &&  row <=5)? 1: 2;
+		int colIni = (col >= 0 &&  col <=2)? 0 : (col >= 3 &&  col <=5)? 1: 2;
+		
+		return false;
+	}
+	
+	public boolean setCell(int row, int col, int digit) {
+		if (!(row>= 0 && row <DIM) || !(row>= 0 && row <DIM) || !(row>= 0 && row <DIM))
+			throw new IllegalArgumentException("not a good row || col || digit in setCell");
+		
+		return false;
+	}
+	
+}

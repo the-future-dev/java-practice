@@ -1,0 +1,54 @@
+package dentinia.governor.model;
+
+import java.util.Set;
+import java.util.TreeSet;
+
+public class LeggeElettoraleDHondt implements LeggeElettorale {
+
+	@Override
+	public RisultatoElezioni apply(Elezioni t) {
+//		Elezioni t
+//		private SortedMap<Partito, Long> mappaVoti;
+//		private long seggiDaAssegnare;
+//		private LeggeElettorale algoritmo;
+		
+		Map<Long, Quoziente> quozienti = new TreeMap<>();
+		Set<Partito> partiti = new TreeSet<>();
+		
+//		System.out.println(t.getPartiti().size());
+		
+		for (Partito p : t.getPartiti()) {
+			partiti.add(p);
+			System.out.println(p.getNome()+": ");
+			for (int i = 1; i<=20; i++) {
+				Quoziente q = new Quoziente(p, t.getVoti(p)/i);
+				quozienti.add(q);
+				System.out.print(t.getVoti(p)/i+"\t");
+			}
+			System.out.println("\n\t| "+quozienti.size());
+		}
+		
+		Set<Quoziente> selezionati = new TreeSet<>();
+		int i = 0;
+//		System.out.println("Da assegnare: "+t.getSeggiDaAssegnare());
+		for (Quoziente q : quozienti) {
+			if (i<t.getSeggiDaAssegnare()) {
+				selezionati.add(q);
+				i=i+1;
+			}
+		}
+		
+		RisultatoElezioni re = new RisultatoElezioni(partiti);
+		
+		for (Partito p : t.getPartiti()) {
+			int nSeggiPartito = 0;
+			for (Quoziente q : selezionati) {
+				if (q.getPartito().equals(p)) nSeggiPartito++;
+			}
+			re.setSeggi(p, nSeggiPartito);
+		}
+		
+		return re;
+	}
+
+}

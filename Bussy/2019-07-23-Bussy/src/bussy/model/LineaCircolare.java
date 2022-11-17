@@ -1,0 +1,45 @@
+package bussy.model;
+
+import java.util.Map;
+import java.util.Optional;
+
+public class LineaCircolare extends Linea {
+
+	public LineaCircolare(String id, Map<Integer, Fermata> orariPassaggioAlleFermate) {
+		super(id, orariPassaggioAlleFermate);
+		Fermata fermataIniziale = this.getCapolineaIniziale().getValue();
+		Fermata fermataFinale = this.getCapolineaFinale().getValue();
+		if (!isCircolare()) throw new BadLineException("La linea non è circolare, i capilinea non coincidono " + fermataIniziale.getId() + "/" + fermataFinale.getId());
+	}
+
+	@Override
+	public Optional<Percorso> getPercorso(String fermataDa, String fermataA) {
+		Optional<Integer> intDa, intA ;
+		try {
+			intDa = Optional.of(getOrarioPassaggioAllaFermata(fermataDa));
+			intA = Optional.of(getOrarioPassaggioAllaFermata(fermataA));
+		} catch (Exception e) {
+			return Optional.empty();
+		}
+		
+		if (intDa.isEmpty() || intA.isEmpty()) {
+			return Optional.empty();
+		} else {
+			int a = intDa.get();
+			int b = intA.get();
+			
+			if (a < b) {
+				return Optional.of( new Percorso(fermataDa, fermataA, this, b-a));
+			} else {
+				
+				int duration = getCapolineaFinale().getKey() - a + b;
+				return Optional.of( new Percorso(fermataDa, fermataA, this, duration));
+			}
+		}
+	}
+	
+	private boolean isCapolinea(String str) {
+		return isCapolineaFinale(str) && isCapolineaIniziale(str);
+	}
+
+}

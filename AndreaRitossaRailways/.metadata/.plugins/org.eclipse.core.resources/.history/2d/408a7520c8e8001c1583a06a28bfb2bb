@@ -1,0 +1,24 @@
+package rfd.model;
+
+import java.util.List;
+import java.util.Set;
+
+public class DirectRouteFinder extends RouteFinder {
+
+	public DirectRouteFinder(Set<RailwayLine> rwylines) {
+		super(rwylines);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public List<Route> getRoutes(String from, String to) {
+		if (from == null || to == null)
+			throw new IllegalArgumentException("nullable input");
+		
+		
+		for ()
+		
+		return null;
+	}
+
+}

@@ -1,0 +1,17 @@
+package pianodistudi.persistence;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Map;
+
+import pianodistudi.model.AttivitaFormativa;
+
+public class MyAttivitaFormativeReader implements AttivitaFormativeReader {
+
+	@Override
+	public Map<String, AttivitaFormativa> recuperaElenco(Reader rdr) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,60 @@
+package qa.ui.javafx;
+
+import javafx.event.ActionEvent;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import qa.ui.controller.Controller;
+
+public class MyQualityPane extends BorderPane {
+	private Controller controller;
+	
+	private ComboBox<String> combo;
+	private TextArea dettaglio;
+	private TextArea percentageTable;
+	private BarChart<String, Number> graph;
+	
+	public MyQualityPane(Controller controller) {
+		this.controller = controller;
+//		In alto, una Combo e due TextArea di opportuna dimensione consentono rispettivamente di scegliere quale
+//		prodotto approfondire, mostrarne il dettaglio, e visualizzare la tabella percentuali relativa al grafico
+//		mostrato sotto - che non cambia nel tempo.
+		VBox top = new VBox();
+		combo = new ComboBox<>(controller.getDescrizioni());
+		combo.setOnAction(this::pickedADescrizione);
+		dettaglio = new TextArea();
+		dettaglio.setPrefHeight(80);
+		percentageTable = new TextArea();
+		percentageTable.setPrefHeight(50);
+		top.getChildren().addAll(combo, dettaglio, percentageTable);
+		
+		CategoryAxis asseOrizz = new CategoryAxis();
+		asseOrizz.setLabel("Prodotti");
+		NumberAxis asseVert = new NumberAxis(0, 1, 100);
+		asseVert.setLabel("Qualità");
+		
+		graph = new BarChart<>(asseOrizz,asseVert);
+		graph.setTitle("% prodotti entro qualità standard");
+		XYChart.Series<String,Number> modena = new XYChart.Series<>();
+		modena.setName("Modena");
+		modena.getData().add( new XYChart.Data<>("Mele", 30));
+		modena.getData().add( new XYChart.Data<>("Pere", 15));
+		modena.getData().add( new XYChart.Data<>("Arance", 50));
+		chart.getData().add(modena);
+
+		this.setTop(top);
+		this.setCenter(graph);
+	}
+	
+	public void pickedADescrizione(ActionEvent e) {
+		System.out.println(combo.getValue());
+//		for ()
+//		
+	}
+
+}

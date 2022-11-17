@@ -1,0 +1,22 @@
+package battleship.controller;
+
+import java.util.Map;
+
+import battleship.model.ShipBoard;
+import battleship.model.ShipItem;
+import battleship.model.ShipType;
+
+public class MyController extends AbstractController {
+
+	public MyController(ShipBoard solutionBoard, ShipBoard initialBoard) {
+		super(solutionBoard, initialBoard);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int verify() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

@@ -1,0 +1,135 @@
+package pianodistudi.ui;
+
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import pianodistudi.controller.Controller;
+import pianodistudi.model.AttivitaFormativa;
+import pianodistudi.model.Tipologia;
+
+public class MainPane extends BorderPane {
+	
+	private Controller controller;
+	private ComboBox<String> afCombo;
+	private ComboBox<Tipologia> tipCombo;	
+	private Button inserisci, rimuovi, verifica, carica;
+	private SortedMap<Tipologia,TextArea> outputs;
+	private TextField statusBar;
+	private TextArea outputVerifica;
+	
+
+	public MainPane(Controller controller) {
+		this.controller=controller;
+		//
+		VBox leftBox = new VBox();
+		leftBox.setPrefWidth(300);
+			HBox miniBoxIniziale = new HBox(); miniBoxIniziale.setAlignment(Pos.CENTER);
+			Label titolino = new Label("Inserimento attività nel piano");
+			titolino.setStyle("-fx-font-weight: bold");
+			miniBoxIniziale.getChildren().addAll(titolino);
+			leftBox.getChildren().addAll(new Label("  "), miniBoxIniziale, new Label("  "));
+			// 
+			// *** DA FARE: costruire e popolare qui le due combo
+			//
+			afCombo = new ComboBox<>();
+			afCombo.setItems(FXCollections.observableArrayList(controller.getListaAF()));
+			tipCombo = new ComboBox<>();
+			tipCombo.setItems(FXCollections.observableArrayList(Tipologia.values()));
+			leftBox.getChildren().addAll(new Label(" Attività formative  "), afCombo);
+			leftBox.getChildren().addAll(new Label(" Tipologie  "), tipCombo);
+			//
+			HBox miniBoxPulsanti = new HBox(); miniBoxPulsanti.setAlignment(Pos.CENTER);
+			inserisci = new Button("Aggiungi");
+			inserisci.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+			inserisci.setOnAction(this::myHandler);
+			rimuovi = new Button("Rimuovi");
+			rimuovi.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+			rimuovi.setOnAction(this::myHandler);
+			carica = new Button("Carica default");
+			carica .setFont(Font.font("Arial", FontWeight.BOLD, 12));
+			carica .setOnAction(this::myLoader);
+			miniBoxPulsanti.getChildren().addAll(inserisci, new Label("  "), rimuovi);
+			miniBoxPulsanti.getChildren().addAll(new Label(" OPPURE "), carica);
+			leftBox.getChildren().addAll(new Label("  "), miniBoxPulsanti, new Label("  "));
+			//
+			statusBar = new TextField(); statusBar.setEditable(false);
+			statusBar.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+			leftBox.getChildren().addAll(new Label(" CFU Totali  "), statusBar);
+			//
+			HBox miniBoxVerifica = new HBox(); miniBoxVerifica.setAlignment(Pos.CENTER);
+			verifica = new Button("Verifica ordinamento");
+			verifica.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+			verifica.setOnAction(this::checkOrd);
+			outputVerifica = new TextArea();
+			outputVerifica.setPrefSize(300,400);
+			miniBoxVerifica.getChildren().addAll(verifica);
+			leftBox.getChildren().addAll(new Label("  "), miniBoxVerifica, new Label(" Risultato verifica  "), outputVerifica);
+		this.setLeft(leftBox);
+		//
+		VBox rightBox = new VBox();
+		rightBox.setPrefWidth(500);
+		outputs = new TreeMap<Tipologia,TextArea>();
+		for (Tipologia t : Tipologia.values()) {
+			TextArea area = new TextArea();
+			area.setPrefSize(500,400);
+			area.setFont(Font.font("Courier New", FontWeight.NORMAL, 11));
+			outputs.put(t, area);
+			rightBox.getChildren().addAll(new Label(t.toString()), area);
+		}
+		
+		this.setRight(rightBox);
+	}
+	
+	private void myHandler(ActionEvent ev) {
+		// *** DA FARE ***
+		// inserisce o rimuove l’attività formativa attualmente selezionata dalla tipologia attualmente selezionata 
+		// se ciò non risulta possibile (perché il controller emette eccezione), avvisare l'utente tramite alert
+		try {
+			if (ev.getSource().equals(inserisci)) {
+				controller.inserisci(null, null);
+			} else {
+//				rimuovi
+			}
+		} catch (Error error) {
+			Controller.alert("ERROR", error.toString(), ""):
+		}
+		
+	}
+	
+	private void checkOrd(ActionEvent ev) {
+		// *** DA FARE ***
+		// scatena la verifica di coerenza del piano rispetto all'ordinamento
+		// il risultato viene mostrato nell'area di uscita apposita
+	}
+	
+	private void myLoader(ActionEvent ev) {
+		Map<Tipologia, List<AttivitaFormativa>> mappaPianoStandard  = controller.getPianoDidatticoStandard();
+		for (Tipologia t : Tipologia.values()) {
+			List<AttivitaFormativa> listaAF = mappaPianoStandard.get(t);
+			for(AttivitaFormativa af : listaAF) {
+				controller.inserisci(af, t);
+			}
+			outputs.get(t).setText(mappaPianoStandard.get(t).stream().map(a -> a.toString()).collect(Collectors.joining("\n")));
+		}
+		statusBar.setText("CFU totali: " + controller.getCfuTot());
+	}
+	
+	
+}

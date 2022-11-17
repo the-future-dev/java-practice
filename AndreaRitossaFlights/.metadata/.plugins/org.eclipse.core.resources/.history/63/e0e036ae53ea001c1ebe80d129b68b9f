@@ -1,0 +1,30 @@
+package flightTracker.ui.controller;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.List;
+
+import flightTracker.model.Flight;
+import flightTracker.model.Point;
+import flightTracker.persistence.BadFileFormatException;
+
+public class MyController extends Controller {
+
+	public MyController(String[] availableFlightFiles) {
+		super(availableFlightFiles);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public List<Point> getPoints(Flight flight) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Flight load(String flightId, Reader reader) throws IOException, BadFileFormatException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,12 @@
+package bussy.ui;
+
+import javafx.scene.layout.BorderPane;
+
+public class MainPane extends BorderPane {
+	private Button button;
+	private ComboBox<String> comboA;
+	private ComboBox<String> comboDa;
+	private Controller controller;
+	private TextArea output;
+	
+}

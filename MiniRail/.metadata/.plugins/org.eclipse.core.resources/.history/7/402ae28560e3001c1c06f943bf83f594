@@ -1,0 +1,25 @@
+package minirail.model;
+
+import java.util.Map;
+
+public class MyRunner implements Runner {
+
+	@Override
+	public void clock(double period) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Map<String, LineStatus> getLines() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Gauge getGauge() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,138 @@
+package pianodistudi.model;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Stream;
+
+public class PianoDiStudi implements Piano {	
+	private Map<Tipologia, List<AttivitaFormativa>> piano;
+	private StringBuilder logger;
+	
+	public PianoDiStudi() {
+		this.piano=new HashMap<>();
+		this.logger = new StringBuilder();
+		for (Tipologia t : Tipologia.values())
+			piano.put(t, new ArrayList<>());
+	}
+	
+	public String logVerifica() {
+		return logger.toString();
+	}
+	
+	public void inserisci(AttivitaFormativa af, Tipologia t) {
+		// ***** DA FARE *****
+		// consente di aggiungere un'attività formativa in una data tipologia; 
+		// deve controllare che l’attività formativa da inserire non sia già presente nel piano 
+		// (né in quella tipologia, né in altre) – altrimenti, lanciare IllegalArgumentException
+		for (List<AttivitaFormativa> listAttivita : piano.values()) {
+			for (AttivitaFormativa attForm : listAttivita) {
+				if (attForm.equals(af))
+					throw new IllegalArgumentException("Attività formativa già presente");
+			}
+		}
+		List<AttivitaFormativa> w = piano.get(t);
+		w.add(af);
+		piano.put(t, w);
+	}
+
+	public void rimuovi(AttivitaFormativa af, Tipologia t) {
+		// ***** DA FARE *****
+		// consente di rimuovere un'attività formativa da una data tipologia; 
+		// deve controllare che l’attività formativa da rimuovere sia già presente nel piano 
+		// *in quella specifica tipologia* - altrimenti, lanciare IllegalArgumentException
+		List<AttivitaFormativa> listAtt = getAttivitaFormative(t);
+		if (listAtt.contains(af)) {
+			listAtt.remove(af);
+		} else {
+			throw new IllegalArgumentException("Attività non presente");
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "PianoDiStudi [piano=" + piano + "]";
+	}
+
+	@Override
+	public int getCfu(Tipologia t) {
+		return piano.get(t).stream().mapToInt(af -> af.getCfu()).reduce(0, (a,b) -> a+b);
+	}
+	
+	@Override
+	public int getCfuTot() {
+		return Stream.of(Tipologia.values()).mapToInt(this::getCfu).reduce(0, (a,b) -> a+b);
+	}
+	
+	@Override
+	public List<AttivitaFormativa> getAttivitaFormative(Tipologia t) {
+		return piano.get(t);
+	}
+	
+	//------------
+	
+	/** verifica che il piano rispetti l'ordinamento, ossia che:
+	*   1) il totale crediti previsti in ogni tipologia rientri nel range min-max stabilito dall'ordinamento per tale tipologia
+	*   2) le attività formative previste in ogni tipologia appartengano a un SSd ammesso dall'ordinamento per tale tipologia
+	*/
+	public boolean verificaOrdinamento(Ordinamento ord) {
+		// DA FARE
+		// Suggerimento (non obbligatorio, meno efficiente ma più chiaro): strutturare le due verifiche in due metodi ausiliari 
+		// ad esempio: return verificaRangeCfu(ord) &&  verificaSettoriAttivita(ord);
+		return verificaRangeCfu(ord) && verificaSettoriAttivita(ord); // fake return solo per completare lo scheletro del metodo
+	}
+	
+	private boolean verificaRangeCfu(Ordinamento ord) {
+		logger.append("Verifica Range CFU\n\n");
+		Set<Tipologia> lt = piano.keySet(); 
+		for (Tipologia type : lt) {
+			CfuRange cRange = ord.getRange(type);
+			int cfuOfType = this.getCfu(type);
+			logger.append("checking type : "+type.toString()+" \t\t");
+			if (!(cfuOfType >= cRange.getMin() && cfuOfType<= cRange.getMax())) {
+				logger.append("status = false\n");
+				System.out.println(logVerifica());
+				return false;
+			} else {
+				logger.append("status = true\n");
+			}
+		}
+		return true;
+	}
+	private boolean verificaSettoriAttivita(Ordinamento ord) {
+		logger.append("Verifica Settori Attivita Formativa\n\n");
+		Set<Tipologia> lt = piano.keySet(); 
+		for (Tipologia type : lt) {
+			List<AttivitaFormativa> activityList = piano.get(type);
+			Optional<List<Ssd>> mayAList = ord.getSettori(type);
+			logger.append("checking type : "+type.toString()+" \n");
+			if (mayAList.isEmpty()) {
+				logger.append("\t type: empty\n");
+				System.out.println(logVerifica());
+				return false;	
+			}
+			List<Ssd> possibleSsd = mayAList.get();
+			logger.append("\t type: \n"+possibleSsd);
+			for (AttivitaFormativa activity : activityList) {
+				boolean found = false;
+				for (Ssd sd : possibleSsd) {
+					if (sd.equals(activity.getSsd())) {
+						found = true;
+					}
+				}
+				if (!found) {
+					logger.append(activity.getSsd() +" status = false\n");
+					System.out.println(logVerifica());
+					return false;
+				} else {
+					logger.append(activity.getSsd()+" status = true\n");
+				}
+					
+			}
+		}
+		return true;
+	}
+}

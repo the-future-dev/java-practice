@@ -1,0 +1,17 @@
+package mastermind.persistence;
+
+public class MyConfigReader implements ConfigReader {
+
+	@Override
+	public int dimensioneCodice() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int numeroTentativi() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

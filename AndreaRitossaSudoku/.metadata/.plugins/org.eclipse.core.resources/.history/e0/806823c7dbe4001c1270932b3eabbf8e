@@ -1,0 +1,15 @@
+public class MyController extends AbstractController {
+
+	@Override
+	public String getCellLabel(int row, int col) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean setCell(int row, int col, String value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

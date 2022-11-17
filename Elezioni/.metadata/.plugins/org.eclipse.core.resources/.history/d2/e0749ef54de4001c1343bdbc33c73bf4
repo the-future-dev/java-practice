@@ -1,0 +1,110 @@
+package dentinia.governor.ui.javafx;
+
+import java.util.Set;
+
+import dentinia.governor.model.Elezioni;
+import dentinia.governor.model.Partito;
+import dentinia.governor.model.RisultatoElezioni;
+import dentinia.governor.ui.controller.Controller;
+
+import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+public class ElectionPane extends BorderPane {
+	private Button calcola;
+	private PieChart chart;
+	private Controller controller;
+	private TextArea electionTable;
+	private TextArea percentageTable;
+	private FlowPane rightPane;
+	private Button salva;
+	private Slider sbarramento;
+	
+	public ElectionPane(Controller c) {
+		this.controller= c;
+		
+		HBox top = new HBox();
+		Label topL = new Label("Sbarramento %	");
+		sbarramento = new Slider(0, 10, 0);
+//		sbarramento.valueProperty().addListener(this::calcolaSeggi);
+		top.getChildren().addAll(topL, sbarramento);
+		top.setAlignment(Pos.CENTER_LEFT);
+		
+		rightPane = new FlowPane();
+		Label rightL = new Label("Distribuzione seggi");
+		chart = new PieChart();
+		disegnaGrafico(controller.getElezioni());
+		rightPane.getChildren().addAll(rightL, chart);
+		
+		FlowPane mid = new FlowPane();
+		electionTable = new TextArea();
+		percentageTable = new TextArea();
+		
+		percentageTable.setEditable(false);
+		electionTable.setEditable(false);
+		
+		percentageTable.setText(calcolaPercentuali(controller.getElezioni()));
+		electionTable.setText(controller.getElezioni().toString());
+		
+		mid.getChildren().addAll(electionTable, percentageTable);
+		
+		HBox bottom = new HBox();
+		calcola = new Button("Calcola");
+		calcola.setOnAction(this::calcolaSeggi);
+		salva = new Button("Salva");
+		salva.setOnAction(this::salva);
+		bottom.getChildren().addAll(calcola, salva);
+		bottom.setAlignment(Pos.CENTER);
+		
+		this.setBottom(bottom);
+		this.setCenter(mid);
+		this.setRight(rightPane);
+		this.setTop(sbarramento);
+		
+
+		
+		disegnaGrafico(controller.getElezioni());
+	}
+	
+	private void salva(ActionEvent e) {
+
+
+	}
+	
+	private void disegnaGrafico(Elezioni elezioni) {
+		
+	}
+	
+	public void calcolaSeggi(ActionEvent e) {
+		controller.ricalcola(sbarramento.getValue());
+		percentageTable.setText(calcolaPercentuali(controller.getElezioni()));
+		electionTable.setText(controller.getElezioni().toString());
+	}
+
+	private String calcolaPercentuali(Elezioni elezioni) {
+		RisultatoElezioni re = elezioni.getRisultato();
+		long totSeggi = re.getSeggiTotali();
+		long totVoti = elezioni.getVotiTotali();
+		String str = "Valutazione in percentuale\n";
+		
+		for (Partito p : re.getPartiti()) {
+			Long votiP = elezioni.getVoti(p);
+			Long seggiP = re.getSeggi(p);
+			double voti = votiP.doubleValue()/totVoti;
+			double seggi = seggiP.doubleValue()/totSeggi;
+			System.out.println(p.getNome()+ " "+votiP/totVoti+" "+seggiP);
+			str+= p.getNome()+"\t\tVoti: "+voti+"%\t"+"Seggi: "+seggi+"%\n";
+		}
+		
+		return str;
+	}
+}

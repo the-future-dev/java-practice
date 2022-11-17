@@ -1,0 +1,32 @@
+package elections.persistence;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
+import elections.model.RisultatoElezioni;
+
+public class MySeggiWriter implements SeggiWriter {
+
+	private DateTimeFormatter formatterShort = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT);
+	private PrintWriter f;
+
+	public MySeggiWriter(String path) throws IOException {
+		if (path== null)
+			throw new IllegalArgumentException("nullable input");
+		this.f = new PrintWriter(new FileWriter(path));
+	}
+	
+	@Override
+	public void stampaSeggi(RisultatoElezioni risultato, String msg) throws IOException {
+		LocalDateTime ora = LocalDateTime.now();
+		f.println( );
+		f.println(msg);
+		f.print(risultato);		
+		
+	}
+
+}

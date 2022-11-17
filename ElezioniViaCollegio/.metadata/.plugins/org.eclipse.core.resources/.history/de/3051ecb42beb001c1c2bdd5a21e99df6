@@ -1,0 +1,22 @@
+package elbonia.persistence;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+
+import elbonia.model.Collegio;
+
+public class MyCollegiReader implements CollegiReader {
+
+	@Override
+	public List<Collegio> caricaElementi(Reader reader) throws IOException, BadFileFormatException {
+		if (reader == null)
+			throw new IllegalArgumentException("Nullable Reader");
+		
+		List<Collegio> lC = new ArrayList<>();
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

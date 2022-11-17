@@ -1,0 +1,37 @@
+package minesweeper.model;
+
+public class PlayerMineField extends MineField {
+	
+	private int hiddenCells;
+	
+	public PlayerMineField() {
+		super(10);
+		hiddenCells = 0;
+	}
+	
+	public PlayerMineField(int size) {
+		super(size);
+		hiddenCells = 0;
+	}
+
+	@Override
+	protected void init() {
+		hiddenCells = 0;
+		for(int i = 0; i< getSize(); i++){
+			for (int j = 0; j< getSize(); j++) {
+				setCell(i, j, new Cell(CellType.HIDDEN));
+				hiddenCells++;
+			}
+		}
+	}
+	
+	public int getHiddenCellsNumber() {
+		return hiddenCells;
+	}
+	
+	@Override
+	protected void setCell(int row, int col, Cell cell) {
+		// might throw NPE if the referenced board cell is null 
+		board[row][col] = cell; 
+	}
+}

@@ -1,0 +1,19 @@
+package mastermind.persistence;
+
+import mastermind.model.Gioco;
+
+public class MyGameSaver implements GameSaver {
+
+	@Override
+	public void save(Gioco gioco) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

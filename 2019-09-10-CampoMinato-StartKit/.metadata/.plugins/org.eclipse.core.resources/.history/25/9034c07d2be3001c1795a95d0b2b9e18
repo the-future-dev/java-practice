@@ -1,0 +1,21 @@
+package minesweeper.persistence;
+
+import minesweeper.model.Game;
+
+public class MyGameSaver implements GameSaver {
+	
+	private PrintWriter pw;
+	
+	@Override
+	public void print(Game match) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

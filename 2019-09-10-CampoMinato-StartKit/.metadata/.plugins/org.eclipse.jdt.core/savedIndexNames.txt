@@ -1,0 +1,11 @@
+INDEX VERSION 1.131+C:\Users\andre\Desktop\JAVA_unibo\esami\2019-09-10-CampoMinato-StartKit\.metadata\.plugins\org.eclipse.jdt.core
+396412696.index
+4195231776.index
+2433859119.index
+3690514212.index
+1865797976.index
+653969673.index
+2732512550.index
+1392517965.index
+1248812141.index
+1146593797.index

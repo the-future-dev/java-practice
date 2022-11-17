@@ -1,0 +1,12 @@
+package dentinia.governor.persistence;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+public class Prova {
+	public static void main(String[] args) {
+		LocalDate
+		LocalDateTime t = LocalDateTime.now();
+		System.out.println("");
+	}
+}

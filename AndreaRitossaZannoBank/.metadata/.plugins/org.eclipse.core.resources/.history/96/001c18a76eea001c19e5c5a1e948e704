@@ -1,0 +1,41 @@
+package ubz.persistence;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+
+import ubz.model.Disponibilità;
+import ubz.model.Politiche;
+
+public class MyDotazioneLoader implements DotazioneLoader {
+	private Disponibilità dispcy;
+	private Politiche policy;
+	
+	@Override
+	public void load(InputStream r) throws IOException, BadFileFormatException {
+		if (r == null)
+			throw new IllegalArgumentException("Nullable Input Stream");
+		ObjectInputStream readFromMe = new ObjectInputStream(r);
+		try {
+			dispcy = (Disponibilità) readFromMe.readObject();
+			policy = (Politiche) readFromMe.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		readFromMe.close();
+	}
+
+	@Override
+	public Disponibilità getDisponibilità() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Politiche getPolitiche() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

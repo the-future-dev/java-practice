@@ -1,0 +1,31 @@
+package minesweeper.persistence;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+
+public class MyConfigReader implements ConfigReader {
+	private int mines = 0;
+	private int size = 0;
+	
+	public MyConfigReader (Reader reader) throws IOException, BadFileFormatException {
+		BufferedReader breader = new BufferedReader(reader);
+		String l1 = breader.readLine();
+		String l2 = breader.readLine();
+		if (breader.readLine() != null) {
+			throw new BadFileFormatException("Non di due linee");
+		}
+		String [] l1Tokens = l1.split(":");
+	}
+	
+	@Override
+	public int getSize() {
+		return this.size;
+	}
+
+	@Override
+	public int getMinesNumber() {
+		return this.mines;
+	}
+
+}

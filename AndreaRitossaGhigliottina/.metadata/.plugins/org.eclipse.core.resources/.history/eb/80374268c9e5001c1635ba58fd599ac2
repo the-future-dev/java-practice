@@ -1,0 +1,46 @@
+package ghigliottina.model;
+
+import java.util.Iterator;
+import java.util.List;
+
+public class Ghigliottina implements Iterator{
+
+	private Iterator<Terna> iterator;
+	private String rispostaEsatta;
+	private List<Terna> terne;
+	
+	public Ghigliottina(List<Terna> terne, String rE) {
+		if (terne == null || rE == null || rE.trim().equals(""))
+			throw new IllegalArgumentException("Nullable parameter to Ghigliottina constructor");
+		this.rispostaEsatta = rE;
+		this.terne = terne;
+		iterator = terne.iterator();
+	}
+
+	public String getRispostaEsatta() {
+		return rispostaEsatta;
+	}
+
+	public List<Terna> getTerne() {
+		return terne;
+	}
+
+	@Override
+	public boolean hasNext() {
+		// TODO Auto-generated method stub
+		return iterator.hasNext();
+	}
+
+	@Override
+	public Object next() {
+		// TODO Auto-generated method stub
+		return iterator.next();
+	}
+
+	@Override
+	public String toString() {
+		return "Ghigliottina [iterator=" + iterator + ", rispostaEsatta=" + rispostaEsatta + ", terne=" + terne + "]";
+	}
+	
+	
+}

@@ -1,0 +1,29 @@
+package rfd.controller;
+
+import javafx.collections.FXCollections;
+import javafx.scene.control.ComboBox;
+import rfd.ui.Application;
+import rfd.ui.FlowPane;
+import rfd.ui.Scene;
+import rfd.ui.Stage;
+import rfd.ui.TextField;
+
+public class EsJavaFX19bis extends Application {
+	private ComboBox cb;
+	private TextField txt1;
+	public void start(Stage stage){
+		stage.setTitle("Esempio 19 bis");
+		FlowPane panel = new FlowPane();
+		cb = new ComboBox<>();
+		cb.setPrefWidth(100);
+		cb.setEditable(true);
+		cb.setItems(
+				FXCollections.observableArrayList("Rosso","Giallo","Verde", "Blu")
+			);
+		panel.getChildren().add(cb,txt1);
+		cb.setOnAction(
+				event ->
+				txt1.setText("Opzione corrente: " + cb.getValue() + " (" + cb.getSelectionModel().getSelectedIndex() + ")")
+			);
+		Scene scene = new Scene(panel); stage.setScene(scene); stage.show(); }
+}

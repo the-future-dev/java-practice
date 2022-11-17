@@ -1,0 +1,14 @@
+INDEX VERSION 1.131+C:\Users\andre\Desktop\JAVA_unibo\esami\AndreaRitossaElezioni2017\.metadata\.plugins\org.eclipse.jdt.core
+2433859119.index
+3690514212.index
+3851425966.index
+4195231776.index
+1462144260.index
+1379400694.index
+1392517965.index
+2570588505.index
+1865797976.index
+396412696.index
+950631032.index
+2732512550.index
+1248812141.index

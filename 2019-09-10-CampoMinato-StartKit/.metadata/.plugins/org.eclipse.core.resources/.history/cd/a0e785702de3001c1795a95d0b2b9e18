@@ -1,0 +1,36 @@
+package minesweeper.ui.javafx;
+
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
+import minesweeper.ui.controller.Controller;
+
+public class MinesSweeperPane extends BorderPane{
+	private Controller controller;
+	private MinesSweeperGrid grid;
+	private TextArea output;
+	private Button restart;
+	private Button save;
+	
+	public MinesSweeperPane(Controller c, Stage s) {
+		controller = c;
+		
+		Label nMines = new Label("Mines: "+controller.getMinesNumber());
+		
+		grid = new MinesSweeperGrid(controller, output);
+		
+		this.setTop(nMines);
+		
+	}
+	
+	private void restarter(ActionEvent e) {
+		
+	}
+	private void saver(ActionEvent e) {
+		
+	}
+}

@@ -1,0 +1,26 @@
+package minesweeper.model;
+
+public class PlayerMineField extends MineField {
+	
+	private int hiddenCells;
+	
+	public PlayerMineField() {
+		super(10);
+	}
+	
+	public PlayerMineField(int size) {
+		super(size);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void init() {
+		for(int i = 0; i< getSize(); i++){
+			for (int j = 0; j< getSize(); j++) {
+				setCell(i, j, new Cell(CellType.HIDDEN));
+			}
+		}
+		
+	}
+
+}

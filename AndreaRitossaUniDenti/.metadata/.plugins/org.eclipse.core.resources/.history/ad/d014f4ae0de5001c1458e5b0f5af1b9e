@@ -1,0 +1,61 @@
+package unident.persistence;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
+
+import unident.model.AttivitaFormativa;
+import unident.model.Ssd;
+import unident.model.Tipologia;
+
+public class UniDentPianoDidatticoReader implements PianoDidatticoReader {
+
+	@Override
+	public Set<AttivitaFormativa> readAll(Reader rdr) throws IOException {
+		if (rdr == null) throw new BadFileFormatException("Not a file");
+		BufferedReader BR = new BufferedReader(rdr);
+		String line;
+		Set<AttivitaFormativa> afSet = new TreeSet<>(new Comparator<AttivitaFormativa>() {
+			@Override
+			public int compare(AttivitaFormativa o1, AttivitaFormativa o2) {
+				return o1.getNome().compareTo(o2.getNome());
+			}
+		});
+		while((line = BR.readLine())!= null) {
+			String [] items = line.split("\t{1,}");
+			for (String item: items) {
+				System.out.println(item);
+			}
+			if (items.length != 6 && items.length!=5)
+				throw new BadFileFormatException("not good length:"+items.length);
+//			code: [0] nome: [1]			
+			String code = items[0];
+			String nome = items[1];
+
+//			periodo: [2]	tipologia: [3] ssd: [4] crediti: [5]
+			try {
+				long codeTry = Long.parseLong(items[0]);
+				int periodo = Integer.parseInt(items[2]);
+			} catch(Error e){
+				System.out.println("CODE: "+items[0]+" not a number");
+			}
+			Tipologia type = Tipologia.valueOf(items[3].toUpperCase());
+			System.out.println(type);
+//			if (items[3].toUpperCase().toCharArray()[0] >= "A" && items[3].toUpperCase()<="D") {
+//				
+//			}
+//			int crediti = -1;
+//			
+//			Tipologia t= Tipologia.valueOf(items[3]);
+//			Ssd ss = Ssd.of(items[4]);
+//			if (t == null || ss == null || crediti == -1)
+//				throw new BadFileFormatException(items[3]);
+//			afSet.add(new AttivitaFormativa(items[1], t, ss, crediti));
+		}
+		return afSet;
+	}
+
+}

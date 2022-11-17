@@ -1,0 +1,21 @@
+package ghigliottina.ui;
+
+import java.util.List;
+
+import ghigliottina.model.Ghigliottina;
+
+public class MyController implements Controller {
+	List<Ghigliottina> list;
+	@Override
+	public Ghigliottina sorteggiaGhigliottina() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ghigliottina> listaGhigliottine() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

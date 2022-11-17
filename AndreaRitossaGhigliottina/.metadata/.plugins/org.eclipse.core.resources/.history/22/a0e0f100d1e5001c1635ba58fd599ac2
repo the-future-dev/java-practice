@@ -1,0 +1,69 @@
+package ghigliottina.persistence;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import ghigliottina.model.Esatta;
+import ghigliottina.model.Ghigliottina;
+import ghigliottina.model.Terna;
+
+public class MyGhigliottineReader implements GhigliottineReader {
+	private List<Ghigliottina> ghigliottine;
+	
+	@Override
+	public List<Ghigliottina> getGhigliottine() {
+		// TODO Auto-generated method stub
+		return this.ghigliottine;
+	}
+
+	@Override
+	public List<Ghigliottina> readAll(BufferedReader BR) throws IOException, BadFileFormatException {
+		if (BR == null)
+			throw new IOException("Null Reader");
+		List<Ghigliottina> ghiglioList = new ArrayList<>();
+		Ghigliottina g;
+		while((g = parseOne(BR))!=null) {
+			ghiglioList.add(g);
+		}
+		System.out.println(ghiglioList.size());
+		return ghiglioList;
+	}
+	
+	private Ghigliottina parseOne(BufferedReader BR) throws IOException, Error {
+		Ghigliottina g;
+		List<Terna> l = new ArrayList<>();
+		String line;
+		String [] splittedLine = null;
+		while((line = BR.readLine())!= null
+				&& !line.contains("-")
+				&& !(splittedLine = line.split("="))[0].toUpperCase().equals("RISPOSTA ESATTA") )
+		{
+			Terna t;
+			try {
+				String [] firstSecond = splittedLine[0].split("/");
+				Esatta e = Esatta.valueOf(splittedLine[1].trim());
+				t = new Terna(firstSecond[0].trim(), firstSecond[1].trim(), e);
+			}catch( Error e) {
+				throw new Error(e);
+			}
+			l.add(t);
+		}
+		if (line == null ) {
+			return null;
+		} else {
+			String re = null;
+			if (!line.contains("-")) {
+				splittedLine = line.split("=");
+				re = splittedLine[1].trim();
+			}
+			g = new Ghigliottina(l, re);
+			return g;
+		}
+	}
+	
+//	public static void main(String[] args) {	
+//	}
+}

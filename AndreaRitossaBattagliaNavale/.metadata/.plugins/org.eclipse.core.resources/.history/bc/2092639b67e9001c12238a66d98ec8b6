@@ -1,0 +1,29 @@
+package battleship.ui;
+
+import battleship.controller.Controller;
+import battleship.model.ShipItem;
+import javafx.collections.FXCollections;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
+public class MainPane extends BorderPane {
+	private ComboBox<ShipItem> combo;
+	private Controller controller;
+	private BattleshipGrid grid;
+	private Button verifica;
+	
+	public MainPane(Controller controller, Stage stage) {
+		if (controller == null)
+			throw new IllegalArgumentException("nullable controller");
+		
+		this.controller = controller;
+		combo = new ComboBox<>();
+		combo.setItems(
+				FXCollections.observableArrayList(ShipItem.values())
+			);
+		
+	}
+		
+}
